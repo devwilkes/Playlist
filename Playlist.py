@@ -12,5 +12,20 @@ class Song:
 class Playlist:
     """Represents a playlist of songs.
     """
-
-
+    
+class Sort:
+    """ A class for sorting songs in Spotify by popularity 
+    """
+    def __init__(self, songs):
+        """
+        initialize the sort class with a list of songs 
+        
+        the args- songs list - a list of song dictionaries with 'name' and 
+        'popularity' attributes
+        """
+    def sort_by_popularity(self, ascending=True):
+        """
+        sorting the songs by popularity in ascending or descending order 
+        
+        the args- set to true for ascending , false for descending, default will be true 
+        """
