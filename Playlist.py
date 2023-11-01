@@ -14,7 +14,7 @@ class Playlist:
     """
     
 class Sort:
-    """ A class for sorting songs in Spotify by popularity 
+    """ A class for sorting songs in the playlist by popularity 
     """
     def __init__(self, songs):
         """
