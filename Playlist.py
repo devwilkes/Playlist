@@ -29,3 +29,6 @@ class Sort:
         
         the args- set to true for ascending , false for descending, default will be true 
         """
+class AddSong:
+    """Allow user to add a song to playlist.
+    """
