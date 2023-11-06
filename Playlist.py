@@ -13,6 +13,7 @@ class Song:
         Returns:
             A refined list of songs that match the user's criteria
         """
+        
 
 
 class Playlist:
@@ -25,6 +26,13 @@ class Playlist:
     def generate_queue(self):
         """ Creates a queue of songs to be played by the user. Can be generated
         randomly or generated with user criteria.
+        """
+    
+    def add_song(self, song):
+        """allows user to add songs
+
+        Args:
+            song (str): a song
         """
 
 
@@ -46,8 +54,4 @@ class Sort:
 
         the args- set to true for ascending , false for descending, default will be true 
         """
-
-
-class AddSong:
-    """Allow user to add a song to playlist.
-    """
+        
