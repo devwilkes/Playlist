@@ -7,6 +7,8 @@ import sys
 
 # Dictionary of genres and their corresponding BPM ranges
 # Citation: https://www.fatpick.com/blog/glossary-tempo
+
+# Lexin
 GENRE = {
 
     "R&B": [60, 80],
@@ -17,8 +19,6 @@ GENRE = {
     "Country": [108, 148],
     "Rock": [110, 140],
     "Metal": [128, 160]
-
-
 }
 
 
@@ -33,7 +33,7 @@ class Song:
         bpm(int): beats per minute (or tempo) of the Song.
     """
 
-    def __init__(self, name, ):
+    def __init__(self, name):
         """Initializes a Song object.
 
         Args:
@@ -74,7 +74,7 @@ class Playlist:
         """ This method can sort the songs by popularity
         """
 
-
+# Lexin
 class User:
     """ A class for users with playlists
     """
@@ -82,6 +82,7 @@ class User:
     def __init__(self, username):
         self.name = username
         self.playlist = Playlist()
+        
         # A dict of the user's preferences for the playlist
         self.preferences = {
 
@@ -97,3 +98,11 @@ class User:
                          streams=None, bpm=None, key=None):
 
         pass
+    
+    def filtered_songs(self, criteria):
+        """Filters the list of songs based on user-provided criteria
+
+        Returns:
+            A refined list of songs that match the user's criteria
+        """
+        filtered_results = []
