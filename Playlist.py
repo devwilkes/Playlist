@@ -53,8 +53,10 @@ class Playlist:
         Args:
             song (str): a song
         """
+    def sort_by_popularity(self, ascending=True):
+        """ This method can sort the songs by popularity
+        """
         
-
 class User:
     """ A class for users with playlists
     """
@@ -79,23 +81,4 @@ class User:
         pass
         
 
-
-class Sort:
-    """ A class for sorting songs in the playlist by popularity 
-    """
-
-    def __init__(self, songs):
-        """
-        initialize the sort class with a list of songs 
-
-        the args- songs list - a list of song dictionaries with 'name' and 
-        'popularity' attributes
-        """
-
-    def sort_by_popularity(self, ascending=True):
-        """
-        sorting the songs by popularity in ascending or descending order 
-
-        the args- set to true for ascending , false for descending, default will be true 
-        """
 
