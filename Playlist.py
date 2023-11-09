@@ -2,6 +2,7 @@
 from argparse import ArgumentParser
 import json
 import pandas as pd
+import random
 import re
 import sys
 
@@ -53,14 +54,31 @@ class Song:
 
 class Playlist:
     """Represents a playlist of songs.
+
+    Attributes:
+        song_list(list): a list containing Song objects present in the Playlist.
     """
 
     def __init__(self):
-        """Initializes a Playlist object."""
+        """Initializes a Playlist object.
 
-    def generate_queue(self):
-        """ Creates a queue of songs to be played by the user. Can be generated
-        randomly or generated with user criteria.
+        Args:
+            song_list(list): A list of Songs present in the Playlist.
+
+        Side effects: Sets attributes for 'song_list'.
+        """
+        self.song_list = []
+
+    def generate_queue(self, criteria=None):
+        """ Creates a queue of songs from the Playlist to be played by the user. 
+        Can be generated randomly or generated with user criteria.
+
+        Args:
+            criteria(str): A filter that changes the generated queue based on 
+            user preference. Defaults to None.
+
+        Returns:
+            list(Song): The generated queue of Songs.
         """
 
     def add_song(self, song):
