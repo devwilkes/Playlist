@@ -26,13 +26,14 @@ class Song:
     def __init__(self):
         """Initializes a Song object."""
 
-    def filtered_songs(self):
+    def filtered_songs(self, criteria):
         """Filters the list of songs based on user-provided criteria
 
         Returns:
             A refined list of songs that match the user's criteria
         """
-
+        filtered_results = []
+        
 
 class Playlist:
     """Represents a playlist of songs.
