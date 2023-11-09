@@ -5,6 +5,7 @@ import re
 import sys
 
 # Dictionary of genres and their corresponding BPM ranges
+# Citation: https://www.fatpick.com/blog/glossary-tempo
 GENRE = {
     
    "R&B" : [60, 80], 
