@@ -104,9 +104,9 @@ class Playlist:
         queue = []
 
         if (criteria is not None and value is not None):
-            queue = [song for song in self.song_list]
+            queue = [song for song in self.song_list] # Will add functionality to only include songs that match the attribute given in criteria and value 
         elif (criteria is not None and value is None):
-            queue = sorted(self.song_list)
+            queue = sorted(self.song_list) # Will add cunctionality to only include songs that match the attribute given in criteria
         elif (criteria is None and value is not None):
             ValueError
         else:
