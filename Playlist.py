@@ -135,7 +135,11 @@ class Playlist:
 
     def sort_by_popularity(self, ascending=True):
         """ This method can sort the songs by popularity
+        Args:
+            ascending (bool): If True, sort in ascending order; otherwise, sort in decending order,
         """
+        # Sorting the songs based on the populairty attribute of each songs
+        self.songs.sort(key=lambda song: song.popularity, reverse=not ascending)
 
 # Lexin
 
