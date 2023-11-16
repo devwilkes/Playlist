@@ -22,8 +22,6 @@ GENRE = {
     "Metal": [128, 160]
 }
 
-# Devon (subject to change as we expand Song)
-
 
 class Song:
     """Represents a song that olds various musical properties.
@@ -51,13 +49,15 @@ class Song:
             'release_year', and 'bpm'.
 
         """
+        # Could possibly use some regex here, someone can tackle it
+
         self.name = name
         self.artist_names = artist_names
         self.genre = genre
         self.release_year = release_year
         self.bpm = bpm
 
-# Justin 
+# Justin
     def filtered_songs(self, criteria):
         """Filters the list of songs based on user-provided criteria
 
@@ -65,8 +65,6 @@ class Song:
             A refined list of songs that match the user's criteria
         """
         filtered_results = []
-
-# Devon (subject to change as we expand Playlist)
 
 
 class Playlist:
@@ -86,8 +84,7 @@ class Playlist:
         """
         self.song_list = []
 
-# Devon
-    def generate_queue(self, criteria=None, value=None):
+    def generate_queue(self, criteria=None, value=None):  # Devon
         """ Creates a queue of songs from the Playlist to be played by 
         the user. Can be generated randomly or sorted with user criteria and 
         values for that criteria.
@@ -104,29 +101,33 @@ class Playlist:
         queue = []
 
         if (criteria is not None and value is not None):
-            queue = [song for song in self.song_list] # Will add functionality to only include songs that match the attribute given in criteria and value 
+            # Will add functionality to only include songs that match the attribute given in criteria and value
+            queue = [song for song in self.song_list]
         elif (criteria is not None and value is None):
-            queue = sorted(self.song_list) # Will add cunctionality to only include songs that match the attribute given in criteria
+            # Will add cunctionality to only include songs that match the attribute given in criteria
+            queue = sorted(self.song_list)
         elif (criteria is None and value is not None):
-            ValueError
+            raise ValueError()
         else:
-            queue = random.shuffle(self.song_list)
+            queue.shuffle(self.song_list)
+        return queue
 
-    def add_song(self): #Ethan
+    def add_song(self):  # Ethan
         """Ask user if they want to add a song to the palylist by input the 
         information of the song.
 
         Args:
             song (str): a song
         """
-        answer = input("Do you want to add a song to your Playlist? Please answer 'yes' or 'no'")
+        answer = input(
+            "Do you want to add a song to your Playlist? Please answer 'yes' or 'no'")
         if answer == "yes":
             name = input("Please enter the name of the song")
             artists = input("Please enter the artist(s) of the song")
             genre = input("Please enter the genre of the song")
             release_year = input("Please enter the release year of the song")
             bpm = input("Please enter the bpm of the song")
-            
+
             new_song = Song(name, artists, genre, release_year, bpm)
             self.song_list.append(new_song)
             print("Your song has been added to the Playlist!")
@@ -139,7 +140,8 @@ class Playlist:
             ascending (bool): If True, sort in ascending order; otherwise, sort in decending order,
         """
         # Sorting the songs based on the populairty attribute of each songs
-        self.songs.sort(key=lambda song: song.popularity, reverse=not ascending)
+        self.songs.sort(key=lambda song: song.popularity,
+                        reverse=not ascending)
 
 # Lexin
 
@@ -165,18 +167,10 @@ class User:
     # Sets the user's preferences for the playlist based on genre and bpm
     def user_preferences(self, genre=None,
                          streams=None, bpm=None, key=None):
-        
+
         self.preferences["genre"] = genre
         self.preferences["streams"] = streams
         self.preferences["bpm"] = bpm
         self.preferences["key"] = key
 
         pass
-
-    def filtered_songs(self, criteria):
-        """Filters the list of songs based on user-provided criteria
-
-        Returns:
-            A refined list of songs that match the user's criteria
-        """
-        filtered_results = []
