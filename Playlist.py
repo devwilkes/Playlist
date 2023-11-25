@@ -168,12 +168,16 @@ class User:
         }
 
     # Sets the user's preferences for the playlist based on genre and bpm
-    def user_preferences(self, genre=None,
-                         streams=None, bpm=None, key=None):
+    def user_preferences(self, popularity=None,
+                         duration=None, explicit=None, 
+                         danceability=None, energy=None,
+                         tempo = None, genre = None):
 
+        self.preferences["popularity"] = popularity
+        self.preferences["duration"] = duration
+        self.preferences["explicit"] = explicit
+        self.preferences["danceability"] = danceability
+        self.preferences["energy"] = energy
+        self.preferences["tempo"] = tempo
         self.preferences["genre"] = genre
-        self.preferences["streams"] = streams
-        self.preferences["bpm"] = bpm
-        self.preferences["key"] = key
 
-        pass
