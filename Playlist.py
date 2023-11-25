@@ -157,11 +157,14 @@ class User:
         # A dict of the user's preferences for the playlist
         self.preferences = {
 
+            "popularity": None,
+            "duration": None,
+            "explicit": None, # True or False or Unknown
+            "danceability": None,
+            "energy": None,
+            "tempo": None,
             "genre": None,
-            "streams": None,
-            "bpm": None,
-            "key": None
-
+            
         }
 
     # Sets the user's preferences for the playlist based on genre and bpm
