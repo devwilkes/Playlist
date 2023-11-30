@@ -10,25 +10,25 @@ class Song:
     """Represents a song that olds various musical properties.
 
     Attirbutes:
-        title(str): The name of the Song.
-        artist_names(list): The artist(s) that contributed in the Song.
-        genre(str): The genre of music the Song fits.
-        release_year(str): The year the Song was released.
-        bpm(int): beats per minute (or tempo) of the Song.
+        artists(str): the artists involved in the song
+        album_name(str): the name of the album the song is under
+        track_name(str): the name of the song
+        
+        _popularity(int): the rating of popularity based on the dataset
+        _duration_ms(int): how long the song is in milliseconds
+        _explicit(bool): if the song is explicit or not
+        _tempo(int): the song's tempo
+        _track_genre(str): The genre that the song belongs in.
     """
 
-    def __init__(self, artists, album_name, track_name, popularity,
-                 duration_ms, explicit, track_genre):
+    def __init__(self, artists, album_name, track_name):
         """Initializes a Song object based on attached dataset's column names.
 
         Args:
-            artists(str): the name of the artists involved in the song
+            artists(str): the artists involved in the song
             album_name(str): the name of the album the song is under
             track_name(str): the name of the song
-            popularity(int): number between 0 and 100 that determines a song's popularity
-            duration_ms(int): Track length in milliseconds
-            explicit(bool): boolean value that determines if a song is explicit
-            track_genre(str): the genre that the track belongs
+        
 
         Side effects:
             Sets attributes for each argument.
@@ -38,11 +38,16 @@ class Song:
         self.artists = artists
         self.album_name = album_name
         self.track_name = track_name
-        self.popularity = popularity
-        self.duration_ms = duration_ms
-        self.explicit = explicit
-        self.track_genre = track_genre
-        # Could possibly use some regex here, someone can tackle it
+        
+        # filterable properties
+        self._popularity = 0
+        self._duration_ms = 0
+        self._explicit = False
+        self._tempo = 0
+        self._track_genre = ''
+
+        
+        
         
 class Playlist:
     """Represents a playlist of songs.
