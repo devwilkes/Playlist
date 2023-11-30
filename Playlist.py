@@ -6,23 +6,6 @@ import random
 import re
 import sys
 
-# Dictionary of genres and their corresponding BPM ranges
-# Citation: https://www.fatpick.com/blog/glossary-tempo
-
-# Lexin
-GENRE = {
-
-    "R&B": [60, 80],
-    "Reggae": [60, 90],
-    "Hip Hop": [70, 100],
-    "Dubstep": [80, 90],
-    "Pop": [100, 130],
-    "Country": [108, 148],
-    "Rock": [110, 140],
-    "Metal": [128, 160]
-}
-
-
 class Song:
     """Represents a song that olds various musical properties.
 
