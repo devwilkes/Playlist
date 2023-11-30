@@ -134,15 +134,6 @@ class Playlist:
         self.songs.sort(key=lambda song: song.popularity,
                         reverse=not ascending)
     
-# Justin
-    def filtered_songs(self, criteria):
-        """Filters the list of songs based on user-provided criteria
-
-        Returns:
-            A refined list of songs that match the user's criteria
-        """
-        filtered_results = []
-
 
 # Lexin
 class User:
@@ -180,3 +171,11 @@ class User:
         self.preferences["tempo"] = tempo
         self.preferences["genre"] = genre
 
+# Justin
+    def filtered_songs(self, criteria):
+        """Filters the list of songs based on user-provided criteria
+
+        Returns:
+            A refined list of songs that match the user's criteria
+        """
+        filtered_results = []
