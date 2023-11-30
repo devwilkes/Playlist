@@ -57,15 +57,6 @@ class Song:
         self.release_year = release_year
         self.bpm = bpm
 
-# Justin
-    def filtered_songs(self, criteria):
-        """Filters the list of songs based on user-provided criteria
-
-        Returns:
-            A refined list of songs that match the user's criteria
-        """
-        filtered_results = []
-
 
 class Playlist:
     """Represents a playlist of songs.
@@ -142,10 +133,18 @@ class Playlist:
         # Sorting the songs based on the populairty attribute of each songs
         self.songs.sort(key=lambda song: song.popularity,
                         reverse=not ascending)
+    
+# Justin
+    def filtered_songs(self, criteria):
+        """Filters the list of songs based on user-provided criteria
+
+        Returns:
+            A refined list of songs that match the user's criteria
+        """
+        filtered_results = []
+
 
 # Lexin
-
-
 class User:
     """ A class for users with playlists
     """
@@ -167,7 +166,7 @@ class User:
             
         }
 
-    # Sets the user's preferences for the playlist based on genre and bpm
+    # Sets the user's preferences for the playlist based on dataset column names
     def user_preferences(self, popularity=None,
                          duration=None, explicit=None, 
                          danceability=None, energy=None,
