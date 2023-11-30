@@ -17,30 +17,33 @@ class Song:
         bpm(int): beats per minute (or tempo) of the Song.
     """
 
-    def __init__(self, name, artist_names, genre, release_year, bpm):
-        """Initializes a Song object.
+    def __init__(self, artists, album_name, track_name, popularity,
+                 duration_ms, explicit, track_genre):
+        """Initializes a Song object based on attached dataset's column names.
 
         Args:
-            title(str): The name of the song.
-            artist_names(list): The artist(s) who worked on the Song.
-            genre(str): The grenre of music the Song fits.
-            release_year(str): The year the Song was released.
-            bpm(int): beats per minute (or tempo) of the Song.
+            artists(str): the name of the artists involved in the song
+            album_name(str): the name of the album the song is under
+            track_name(str): the name of the song
+            popularity(int): number between 0 and 100 that determines a song's popularity
+            duration_ms(int): Track length in milliseconds
+            explicit(bool): boolean value that determines if a song is explicit
+            track_genre(str): the genre that the track belongs
 
         Side effects:
-            Sets attributes for 'title', 'atrist_names', 'genre', 
-            'release_year', and 'bpm'.
+            Sets attributes for each argument.
 
         """
+        
+        self.artists = artists
+        self.album_name = album_name
+        self.track_name = track_name
+        self.popularity = popularity
+        self.duration_ms = duration_ms
+        self.explicit = explicit
+        self.track_genre = track_genre
         # Could possibly use some regex here, someone can tackle it
-
-        self.name = name
-        self.artist_names = artist_names
-        self.genre = genre
-        self.release_year = release_year
-        self.bpm = bpm
-
-
+        
 class Playlist:
     """Represents a playlist of songs.
 
