@@ -124,6 +124,24 @@ class Playlist:
         # Sorting the songs based on the populairty attribute of each songs
         self.songs.sort(key=lambda song: song.popularity,
                         reverse=not ascending)
+        
+    # Someone implement these 
+        
+    def __str__(self): 
+        """ Returns an informal string representation of the playlist
+        """
+        pass
+    
+    def __repr__(self):
+        """ Returns a formal string representation of the playlist
+        """
+        pass
+    
+    def __add__(self, other):
+        """ Adds two playlists together
+        """
+        pass
+    
     
 
 # Lexin
