@@ -46,6 +46,15 @@ class Song:
         self._tempo = 0
         self._track_genre = ''
 
+    def __str__(self): 
+        """ Returns an informal string representation of the song
+        """
+        pass
+    
+    def __repr__(self):
+        """ Returns a formal string representation of the song
+        """
+        pass
         
         
         
@@ -65,6 +74,23 @@ class Playlist:
         Side effects: Sets attributes for 'song_list'.
         """
         self.song_list = []
+    
+    # Someone Implement These
+    def __str__(self): 
+        """ Returns an informal string representation of the playlist
+        """
+        pass
+    
+    def __repr__(self):
+        """ Returns a formal string representation of the playlist
+        """
+        pass
+    
+    def __add__(self, other):
+        """ Adds two playlists together
+        """
+        pass
+    
 
     def generate_queue(self, criteria=None, value=None):  # Devon
         """ Creates a queue of songs from the Playlist to be played by 
@@ -125,22 +151,6 @@ class Playlist:
         self.songs.sort(key=lambda song: song.popularity,
                         reverse=not ascending)
         
-    # Someone implement these 
-        
-    def __str__(self): 
-        """ Returns an informal string representation of the playlist
-        """
-        pass
-    
-    def __repr__(self):
-        """ Returns a formal string representation of the playlist
-        """
-        pass
-    
-    def __add__(self, other):
-        """ Adds two playlists together
-        """
-        pass
     
     
 
