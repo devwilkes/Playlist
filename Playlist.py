@@ -195,6 +195,13 @@ class User:
         filtered_results = []
 
 
+def main(file_path):
+    """ Reads from a file and generates Songs.
+
+    Args: file_path (str): The path to the file containing raw text data.
+    """
+
+
 def parse_args(arglist):
     """ Parses command-line arguments
 
