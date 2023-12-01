@@ -6,6 +6,7 @@ import random
 import re
 import sys
 
+
 class Song:
     """Represents a song that olds various musical properties.
 
@@ -13,7 +14,7 @@ class Song:
         artists(str): the artists involved in the song
         album_name(str): the name of the album the song is under
         track_name(str): the name of the song
-        
+
         _popularity(int): the rating of popularity based on the dataset
         _duration_ms(int): how long the song is in milliseconds
         _explicit(bool): if the song is explicit or not
@@ -28,17 +29,17 @@ class Song:
             artists(str): the artists involved in the song
             album_name(str): the name of the album the song is under
             track_name(str): the name of the song
-        
+
 
         Side effects:
             Sets attributes for each argument.
 
         """
-        
+
         self.artists = artists
         self.album_name = album_name
         self.track_name = track_name
-        
+
         # filterable properties
         self._popularity = 0
         self._duration_ms = 0
@@ -46,9 +47,7 @@ class Song:
         self._tempo = 0
         self._track_genre = ''
 
-        
-        
-        
+
 class Playlist:
     """Represents a playlist of songs.
 
@@ -89,10 +88,17 @@ class Playlist:
             # Will add cunctionality to only include songs that match the attribute given in criteria
             queue = sorted(self.song_list)
         elif (criteria is None and value is not None):
-            raise ValueError()
+            raise ValueError(
+                "You need a specific property before requesting a value!")
         else:
             queue.shuffle(self.song_list)
         return queue
+
+    def generate_name(self):  # Devon
+        """ Generates a name for the Playlist based off of the shared 
+        properties of Songs in the Playlist.
+
+        """
 
     def add_song(self):  # Ethan
         """Ask user if they want to add a song to the palylist by input the 
@@ -124,7 +130,7 @@ class Playlist:
         # Sorting the songs based on the populairty attribute of each songs
         self.songs.sort(key=lambda song: song.popularity,
                         reverse=not ascending)
-    
+
 
 # Lexin
 class User:
@@ -140,19 +146,19 @@ class User:
 
             "popularity": None,
             "duration": None,
-            "explicit": None, # True or False or Unknown
+            "explicit": None,  # True or False or Unknown
             "danceability": None,
             "energy": None,
             "tempo": None,
             "genre": None,
-            
+
         }
 
     # Sets the user's preferences for the playlist based on dataset column names
     def user_preferences(self, popularity=None,
-                         duration=None, explicit=None, 
+                         duration=None, explicit=None,
                          danceability=None, energy=None,
-                         tempo = None, genre = None):
+                         tempo=None, genre=None):
 
         self.preferences["popularity"] = popularity
         self.preferences["duration"] = duration
@@ -170,3 +176,17 @@ class User:
             A refined list of songs that match the user's criteria
         """
         filtered_results = []
+
+
+def parse_args(arglist):
+    """ Parses command-line arguments
+
+    Args:
+        arglist (list): a list of command-line arguments.
+    """
+    parser = ArgumentParser()
+
+
+if __name__ == "__main__":
+    args = parse_args(sys.argv[1:])
+    main()
