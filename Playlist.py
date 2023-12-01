@@ -47,6 +47,20 @@ class Song:
         self._tempo = 0
         self._track_genre = ''
 
+    def __str__ (self):
+        """Returns an informal string representation of the song.
+        
+        """
+        return f"{self.track_name} by {self.artists}"
+    
+    def __repr__ (self):
+        """Returns a formal string representation fo the song.
+
+        """
+        return f"Song({repr(self.track_name)}, {repr(self.artists)})"
+    
+song_instance = Song("Daniel Caesar", "Album Name", "Valentina")
+print(str(song_instance))
 
 class Playlist:
     """Represents a playlist of songs.
