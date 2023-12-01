@@ -6,66 +6,61 @@ import random
 import re
 import sys
 
-# Dictionary of genres and their corresponding BPM ranges
-# Citation: https://www.fatpick.com/blog/glossary-tempo
-
-# Lexin
-GENRE = {
-
-    "R&B": [60, 80],
-    "Reggae": [60, 90],
-    "Hip Hop": [70, 100],
-    "Dubstep": [80, 90],
-    "Pop": [100, 130],
-    "Country": [108, 148],
-    "Rock": [110, 140],
-    "Metal": [128, 160]
-}
-
 
 class Song:
     """Represents a song that olds various musical properties.
 
     Attirbutes:
-        title(str): The name of the Song.
-        artist_names(list): The artist(s) that contributed in the Song.
-        genre(str): The genre of music the Song fits.
-        release_year(str): The year the Song was released.
-        bpm(int): beats per minute (or tempo) of the Song.
+        artists(str): the artists involved in the song
+        album_name(str): the name of the album the song is under
+        track_name(str): the name of the song
+
+        _popularity(int): the rating of popularity based on the dataset
+        _duration_ms(int): how long the song is in milliseconds
+        _explicit(bool): if the song is explicit or not
+        _tempo(int): the song's tempo
+        _track_genre(str): The genre that the song belongs in.
     """
 
-    def __init__(self, name, artist_names, genre, release_year, bpm):
-        """Initializes a Song object.
+    def __init__(self, artists, album_name, track_name):
+        """Initializes a Song object based on attached dataset's column names.
 
         Args:
-            title(str): The name of the song.
-            artist_names(list): The artist(s) who worked on the Song.
-            genre(str): The grenre of music the Song fits.
-            release_year(str): The year the Song was released.
-            bpm(int): beats per minute (or tempo) of the Song.
+            artists(str): the artists involved in the song
+            album_name(str): the name of the album the song is under
+            track_name(str): the name of the song
+
 
         Side effects:
-            Sets attributes for 'title', 'atrist_names', 'genre', 
-            'release_year', and 'bpm'.
+            Sets attributes for each argument.
 
         """
-        # Could possibly use some regex here, someone can tackle it
 
-        self.name = name
-        self.artist_names = artist_names
-        self.genre = genre
-        self.release_year = release_year
-        self.bpm = bpm
+        self.artists = artists
+        self.album_name = album_name
+        self.track_name = track_name
 
-# Justin
-    def filtered_songs(self, criteria):
-        """Filters the list of songs based on user-provided criteria
+        # filterable properties
+        self._popularity = 0
+        self._duration_ms = 0
+        self._explicit = False
+        self._tempo = 0
+        self._track_genre = ''
 
-        Returns:
-            A refined list of songs that match the user's criteria
+    def __str__ (self):
+        """Returns an informal string representation of the song.
+        
         """
-        filtered_results = []
+        return f"{self.track_name} by {self.artists}"
+    
+    def __repr__ (self):
+        """Returns a formal string representation fo the song.
 
+        """
+        return f"Song({repr(self.track_name)}, {repr(self.artists)})"
+    
+song_instance = Song("Daniel Caesar", "Album Name", "Valentina")
+print(str(song_instance))
 
 class Playlist:
     """Represents a playlist of songs.
@@ -83,6 +78,22 @@ class Playlist:
         Side effects: Sets attributes for 'song_list'.
         """
         self.song_list = []
+
+    # Someone Implement These
+    def __str__(self):
+        """ Returns an informal string representation of the playlist
+        """
+        pass
+
+    def __repr__(self):
+        """ Returns a formal string representation of the playlist
+        """
+        pass
+
+    def __add__(self, other):
+        """ Adds two playlists together
+        """
+        pass
 
     def generate_queue(self, criteria=None, value=None):  # Devon
         """ Creates a queue of songs from the Playlist to be played by 
@@ -107,27 +118,34 @@ class Playlist:
             # Will add cunctionality to only include songs that match the attribute given in criteria
             queue = sorted(self.song_list)
         elif (criteria is None and value is not None):
-            raise ValueError()
+            raise ValueError(
+                "You need a specific property before requesting a value!")
         else:
             queue.shuffle(self.song_list)
         return queue
 
-    def add_song(self, name, artists, genre, release_year, bpm):  # Ethan
-        """Ask user if they want to add a song to the palylist by input the 
+    def generate_name(self):  # Devon
+        """ Generates a name for the Playlist based off of the shared 
+        properties of Songs in the Playlist.
+
+        """
+
+    def add_song(self, artists, album_name, track_name): #Ethan
+        """
+        Ask user if they want to add a song to the palylist by input the 
         information of the song.
 
         Args:
-            name (str): The name of the song.
-            artists (list): The artist(s) of the song.
-            genre (str): The genre of the song.
-            release_year (str): The release year of the song.
-            bpm (int): Beats per minute of the song.
-        """        
-        if any(song.name == name for song in self.song_list):
-            print("Your song exists in the Playlist, no song will be add")
+            artists (str): the artists involved in the song
+            album_name (str): the name of the album the song is under
+            track_name (str): the name of the song
+        """
+        existing_songs = [song.track_name for song in self.song_list]
+        if track_name in existing_songs:
+            print(f"The song '{track_name}' already exists in the playlist.")
         else:
-            new_song = Song(name, artists, genre, release_year, bpm)
-            self.song_list.append(new_song)               
+            new_song = Song(artists, album_name, track_name)
+            self.song_list.append(new_song)
             print("Your song has been added to the Playlist!")
                 
 
@@ -154,20 +172,56 @@ class User:
         # A dict of the user's preferences for the playlist
         self.preferences = {
 
+            "popularity": None,
+            "duration": None,
+            "explicit": None,  # True or False or Unknown
+            "danceability": None,
+            "energy": None,
+            "tempo": None,
             "genre": None,
-            "streams": None,
-            "bpm": None,
-            "key": None
 
         }
 
-    # Sets the user's preferences for the playlist based on genre and bpm
-    def user_preferences(self, genre=None,
-                         streams=None, bpm=None, key=None):
+    # Sets the user's preferences for the playlist based on dataset column names
+    def user_preferences(self, popularity=None,
+                         duration=None, explicit=None,
+                         danceability=None, energy=None,
+                         tempo=None, genre=None):
 
+        self.preferences["popularity"] = popularity
+        self.preferences["duration"] = duration
+        self.preferences["explicit"] = explicit
+        self.preferences["danceability"] = danceability
+        self.preferences["energy"] = energy
+        self.preferences["tempo"] = tempo
         self.preferences["genre"] = genre
-        self.preferences["streams"] = streams
-        self.preferences["bpm"] = bpm
-        self.preferences["key"] = key
 
-        pass
+# Justin
+    def filtered_songs(self, criteria):
+        """Filters the list of songs based on user-provided criteria
+
+        Returns:
+            A refined list of songs that match the user's criteria
+        """
+        filtered_results = []
+
+
+def main(file_path):
+    """ Reads from a file and generates Songs.
+
+    Args: file_path (str): The path to the file containing raw text data.
+    """
+
+
+def parse_args(arglist):
+    """ Parses command-line arguments
+
+    Args:
+        arglist (list): a list of command-line arguments.
+    """
+    parser = ArgumentParser()
+
+
+if __name__ == "__main__":
+    args = parse_args(sys.argv[1:])
+    main()
