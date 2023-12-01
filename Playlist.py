@@ -65,6 +65,22 @@ class Playlist:
         """
         self.song_list = []
 
+    # Someone Implement These
+    def __str__(self):
+        """ Returns an informal string representation of the playlist
+        """
+        pass
+
+    def __repr__(self):
+        """ Returns a formal string representation of the playlist
+        """
+        pass
+
+    def __add__(self, other):
+        """ Adds two playlists together
+        """
+        pass
+
     def generate_queue(self, criteria=None, value=None):  # Devon
         """ Creates a queue of songs from the Playlist to be played by 
         the user. Can be generated randomly or sorted with user criteria and 
@@ -131,8 +147,9 @@ class Playlist:
         self.songs.sort(key=lambda song: song.popularity,
                         reverse=not ascending)
 
-
 # Lexin
+
+
 class User:
     """ A class for users with playlists
     """
