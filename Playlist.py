@@ -112,27 +112,24 @@ class Playlist:
             queue.shuffle(self.song_list)
         return queue
 
-    def add_song(self):  # Ethan
+    def add_song(self, name, artists, genre, release_year, bpm):  # Ethan
         """Ask user if they want to add a song to the palylist by input the 
         information of the song.
 
         Args:
-            song (str): a song
-        """
-        answer = input(
-            "Do you want to add a song to your Playlist? Please answer 'yes' or 'no'")
-        if answer == "yes":
-            name = input("Please enter the name of the song")
-            artists = input("Please enter the artist(s) of the song")
-            genre = input("Please enter the genre of the song")
-            release_year = input("Please enter the release year of the song")
-            bpm = input("Please enter the bpm of the song")
-
-            new_song = Song(name, artists, genre, release_year, bpm)
-            self.song_list.append(new_song)
-            print("Your song has been added to the Playlist!")
+            name (str): The name of the song.
+            artists (list): The artist(s) of the song.
+            genre (str): The genre of the song.
+            release_year (str): The release year of the song.
+            bpm (int): Beats per minute of the song.
+        """        
+        if any(song.name == name for song in self.song_list):
+            print("Your song exists in the Playlist, no song will be add")
         else:
-            print("No song will be add")
+            new_song = Song(name, artists, genre, release_year, bpm)
+            self.song_list.append(new_song)               
+            print("Your song has been added to the Playlist!")
+                
 
     def sort_by_popularity(self, ascending=True):
         """ This method can sort the songs by popularity
