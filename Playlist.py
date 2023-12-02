@@ -175,9 +175,6 @@ class User:
             "popularity": None,
             "duration": None,
             "explicit": None,  # True or False or Unknown
-            "danceability": None,
-            "energy": None,
-            "tempo": None,
             "genre": None,
 
         }
@@ -185,15 +182,11 @@ class User:
     # Sets the user's preferences for the playlist based on dataset column names
     def user_preferences(self, popularity=None,
                          duration=None, explicit=None,
-                         danceability=None, energy=None,
-                         tempo=None, genre=None):
+                          genre=None):
 
         self.preferences["popularity"] = popularity
         self.preferences["duration"] = duration
         self.preferences["explicit"] = explicit
-        self.preferences["danceability"] = danceability
-        self.preferences["energy"] = energy
-        self.preferences["tempo"] = tempo
         self.preferences["genre"] = genre
 
 # Justin
