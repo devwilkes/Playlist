@@ -1,7 +1,6 @@
 # An initial file for the project.
 from argparse import ArgumentParser
 import json
-import pandas as pd
 import random
 import re
 import sys
@@ -22,7 +21,7 @@ class Song:
         _track_genre(str): The genre that the song belongs in.
     """
 
-    def __init__(self, artists, album_name, track_name):
+    def __init__(self, artists, track_name):
         """Initializes a Song object based on attached dataset's column names.
 
         Args:
@@ -37,7 +36,6 @@ class Song:
         """
 
         self.artists = artists
-        self.album_name = album_name
         self.track_name = track_name
 
         # filterable properties
@@ -46,6 +44,7 @@ class Song:
         self._explicit = False
         self._tempo = 0
         self._track_genre = ''
+        self.album_name = ''
 
     def __str__ (self):
         """Returns an informal string representation of the song,
@@ -70,7 +69,7 @@ class Playlist:
         song_list(list): a list containing Song objects present in the Playlist.
     """
 
-    def __init__(self, playlist_name):
+    def __init__(self):
         """Initializes a Playlist object.
 
         Args:
@@ -79,7 +78,6 @@ class Playlist:
         Side effects: Sets attributes for 'song_list'.
         """
         self.song_list = []
-        self.playlist_name = playlist_name
 
     def __str__(self):
         """ Returns an informal string representation of the playlist
@@ -89,7 +87,7 @@ class Playlist:
         """
         playlist = "Playlist: \n"
         for song in self.song_list:
-            playlist += str(song) + "\n"
+            playlist += f"{song.track_name} by {song.artists}\n"
         
         return playlist
 
@@ -143,10 +141,9 @@ class Playlist:
 
         """
 
-    def add_song(self, artists, album_name, track_name): #Ethan
+    def add_song(self, artists, track_name): #Ethan
         """
-        Ask user if they want to add a song to the palylist by input the 
-        information of the song.
+        Adds a song to the playlist
 
         Args:
             artists (str): the artists involved in the song
@@ -157,7 +154,7 @@ class Playlist:
         if track_name in existing_songs:
             print(f"The song '{track_name}' already exists in the playlist.")
         else:
-            new_song = Song(artists, album_name, track_name)
+            new_song = Song(artists, track_name)
             self.song_list.append(new_song)
             print("Your song has been added to the Playlist!")
                 
@@ -210,14 +207,21 @@ class User:
             A refined list of songs that match the user's criteria
         """
         filtered_results = []
+        
 
+def read_songs(filepath):
+    """Reads a file and generates Songs.
 
-def main(file_path):
-    """ Reads from a file and generates Songs.
-
-    Args: file_path (str): The path to the file containing raw text data.
+    Args:
+        filepath (str): The path to the file containing raw text data.
     """
+    pass
 
+
+def main():
+    """The main function of the program.
+    """
+    pass
 
 def parse_args(arglist):
     """ Parses command-line arguments
