@@ -50,6 +50,7 @@ class Song:
     def __str__ (self):
         """Returns an informal string representation of the song.
         
+        
         """
         return f"{self.track_name} by {self.artists}"
     
@@ -58,9 +59,6 @@ class Song:
 
         """
         return f"Song({repr(self.track_name)}, {repr(self.artists)})"
-    
-song_instance = Song("Daniel Caesar", "Album Name", "Valentina")
-print(str(song_instance))
 
 class Playlist:
     """Represents a playlist of songs.
@@ -79,10 +77,10 @@ class Playlist:
         """
         self.song_list = []
 
-    # Someone Implement These
     def __str__(self):
         """ Returns an informal string representation of the playlist
         """
+        
         pass
 
     def __repr__(self):
