@@ -48,15 +48,18 @@ class Song:
         self._track_genre = ''
 
     def __str__ (self):
-        """Returns an informal string representation of the song.
+        """Returns an informal string representation of the song,
         
-        
+        Returns:
+            str: A string representation of the song.
         """
         return f"{self.track_name} by {self.artists}"
     
     def __repr__ (self):
-        """Returns a formal string representation fo the song.
-
+        """Returns a formal string representation for the song.
+        
+        Returns:
+            str: A formal string representation of the song.
         """
         return f"Song({repr(self.track_name)}, {repr(self.artists)})"
 
@@ -67,7 +70,7 @@ class Playlist:
         song_list(list): a list containing Song objects present in the Playlist.
     """
 
-    def __init__(self):
+    def __init__(self, playlist_name):
         """Initializes a Playlist object.
 
         Args:
@@ -76,22 +79,34 @@ class Playlist:
         Side effects: Sets attributes for 'song_list'.
         """
         self.song_list = []
+        self.playlist_name = playlist_name
 
     def __str__(self):
         """ Returns an informal string representation of the playlist
-        """
         
-        pass
+        Returns:
+            str: A string representation of the playlist.
+        """
+        playlist = "Playlist: \n"
+        for song in self.song_list:
+            playlist += str(song) + "\n"
+        
+        return playlist
 
     def __repr__(self):
         """ Returns a formal string representation of the playlist
         """
-        pass
+        playlist = f"Playlist({self.playlist_name})"
+        
 
     def __add__(self, other):
         """ Adds two playlists together
+        
+        Returns:
+            set: A set of songs that are in both playlists.
         """
-        pass
+        return set(self.song_list | other.song_list)
+        pass 
 
     def generate_queue(self, criteria=None, value=None):  # Devon
         """ Creates a queue of songs from the Playlist to be played by 
