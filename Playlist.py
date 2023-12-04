@@ -108,27 +108,27 @@ class Playlist:
         """
         return set(self.song_list | other.song_list)
 
-    def generate_queue(self, criteria=None, value=None):  # Devon
-        """ Creates a queue of songs from the Playlist to be played by 
-        the user. Can be generated randomly or sorted with user criteria and 
-        values for that criteria.
+    def generate_queue(self, preference = None, value = None):  # Devon
+        """ Creates a queue of songs from the Playlist by changing the order 
+        of Songs in the Playlist. Can be generated randomly or 
+        sorted with a user preference and an optional value for that preference.
 
         Args:
             criteria(str): A preference to sort the Playlist by. Defaults to None.
-            value(str): A value of a preference to filter a queue even further.
-            Can only be used with a valid criteria parameter. Defaults to None.
+            value(str): A value of a preference to filter the Playlist even 
+            further. Can only be used with a valid preference parameter. 
+            Defaults to None.
 
         Returns:
             list(Song): The generated queue of Songs.
         """
         queue = []
 
-        if (criteria is not None and value is not None):
+        if (preference is not None and value is not None):
             queue = [song for song in self.song_list]
-        elif (criteria is not None and value is None):
-            # Will add cunctionality to only include songs that match the attribute given in criteria
-            queue = sorted(self.song_list)
-        elif (criteria is None and value is not None):
+        elif (preference is not None and value is None):
+            queue = sorted(self.song_list, key =)
+        elif (preference is None and value is not None):
             raise ValueError(
                 "You need a specific property before requesting a value!")
         else:
@@ -226,19 +226,11 @@ def read_songs(filepath):
     Args:
         filepath (str): The path to the file containing raw text data.
     """
-<<<<<<< Updated upstream
-    
+
     with open("spotifydata.txt") as file:
         for line in islice(file, 1, None):
-            
+
             pass
-    
-    
-=======
-    # Pattern is WIP, needs tweaking
-    pattern = r"(?x)^\d,+,(?P<artists>),(?P<album_name>),(?P<track_name>),(?P<popularity>),"
-    pass
->>>>>>> Stashed changes
 
 
 def main(user, text_file, preferences):
