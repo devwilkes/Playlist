@@ -149,8 +149,8 @@ class Playlist:
         Adds a song to the playlist
 
         Args:
+            song (obj): the existing song
             artists (str): the artists involved in the song
-            album_name (str): the name of the album the song is under
             track_name (str): the name of the song
         """
         if song is None and artists is None and track_name is None:
@@ -165,6 +165,28 @@ class Playlist:
                 print("Your song has been added to the Playlist!")
             elif song is not None: 
                 self.song_list.append(song)
+                
+    def remove_song(self, song = None, artists = None, track_name = None, ):
+        """
+        Remove a song from the Playlist
+        
+        Args:
+            artists (str): the artists involved in the song
+            song (obj): the existing song
+            track_name (str): the name of the song
+        """
+        if song is None and artists is None and track_name is None:
+            raise ValueError("No values inputted (song, artists, track_name)")
+        existing_songs = [song.track_name for song in self.song_list]
+        if track_name in existing_songs:
+            if song is not None:
+                song = Song(artists, track_name)
+                self.song_list.remove(song)
+                print(f"'{track_name}' have been removed from the Playlist!")
+            else:
+                self.song_list.remove(song)
+        else:
+            raise ValueError("The song is not in the Playlist!")         
                 
 
     def sort_by_popularity(self, ascending=True):
