@@ -104,7 +104,7 @@ class Playlist:
             set: A set of songs that are in both playlists.
         """
         return set(self.song_list | other.song_list)
-        pass 
+         
 
     def generate_queue(self, criteria=None, value=None):  # Devon
         """ Creates a queue of songs from the Playlist to be played by 
