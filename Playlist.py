@@ -251,7 +251,6 @@ def main(user, text_file, preferences):
 
     print(playlist)
 
-
 def parse_args(arglist):
     """ Parses command-line arguments
 
