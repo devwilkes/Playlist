@@ -1,5 +1,6 @@
 # An initial file for the project.
 from argparse import ArgumentParser
+from itertools import islice
 import json
 import random
 import re
@@ -223,10 +224,12 @@ def read_songs(filepath):
         filepath (str): The path to the file containing raw text data.
     """
     
+    with open("spotifydata.txt") as file:
+        for line in islice(file, 1, None):
+            
+            pass
     
     
-    
-    pass
 
 
 def main():
