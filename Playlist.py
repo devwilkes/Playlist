@@ -39,12 +39,14 @@ class Song:
         self.track_name = track_name
 
         # filterable properties
-        self._popularity = 0
-        self._duration_ms = 0
-        self._explicit = False
-        self._tempo = 0
-        self._track_genre = ''
-        self.album_name = ''
+        self.properties = {
+            "popularity": 0,
+            "duration": 0,
+            "explicit": False,
+            "tempo": 0,
+            "genre": '',
+            "album_name": ''
+        }
 
     def __str__ (self):
         """Returns an informal string representation of the song,
@@ -220,6 +222,10 @@ def read_songs(filepath):
     Args:
         filepath (str): The path to the file containing raw text data.
     """
+    
+    
+    
+    
     pass
 
 
