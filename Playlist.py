@@ -1,7 +1,7 @@
 # An initial file for the project.
 from argparse import ArgumentParser
+from itertools import islice
 import json
-import pandas as pd
 import random
 import re
 import sys
@@ -22,7 +22,7 @@ class Song:
         _track_genre(str): The genre that the song belongs in.
     """
 
-    def __init__(self, artists, album_name, track_name):
+    def __init__(self, artists, track_name):
         """Initializes a Song object based on attached dataset's column names.
 
         Args:
@@ -37,30 +37,34 @@ class Song:
         """
 
         self.artists = artists
-        self.album_name = album_name
         self.track_name = track_name
 
         # filterable properties
-        self._popularity = 0
-        self._duration_ms = 0
-        self._explicit = False
-        self._tempo = 0
-        self._track_genre = ''
+        self.properties = {
+            "popularity": 0,
+            "duration": 0,
+            "explicit": False,
+            "tempo": 0,
+            "genre": '',
+            "album_name": ''
+        }
 
-    def __str__ (self):
-        """Returns an informal string representation of the song.
-        
+    def __str__(self):
+        """Returns an informal string representation of the song,
+
+        Returns:
+            str: A string representation of the song.
         """
-        return f"{self.track_name} by {self.artists}"
-    
-    def __repr__ (self):
-        """Returns a formal string representation fo the song.
+        return f"'{self.track_name}' by {self.artists}"
 
+    def __repr__(self):
+        """Returns a formal string representation for the song.
+
+        Returns:
+            str: A formal string representation of the song.
         """
         return f"Song({repr(self.track_name)}, {repr(self.artists)})"
-    
-song_instance = Song("Daniel Caesar", "Album Name", "Valentina")
-print(str(song_instance))
+
 
 class Playlist:
     """Represents a playlist of songs.
@@ -79,45 +83,52 @@ class Playlist:
         """
         self.song_list = []
 
-    # Someone Implement These
     def __str__(self):
         """ Returns an informal string representation of the playlist
+
+        Returns:
+            str: A string representation of the playlist.
         """
-        pass
+        playlist = "Playlist: \n"
+        for song in self.song_list:
+            playlist += f"{song.track_name} by {song.artists}\n"
+
+        return playlist
 
     def __repr__(self):
         """ Returns a formal string representation of the playlist
         """
-        pass
+        playlist = f"Playlist({self.playlist_name})"
 
     def __add__(self, other):
         """ Adds two playlists together
-        """
-        pass
-
-    def generate_queue(self, criteria=None, value=None):  # Devon
-        """ Creates a queue of songs from the Playlist to be played by 
-        the user. Can be generated randomly or sorted with user criteria and 
-        values for that criteria.
-
-        Args:
-            criteria(str): A filter that filters the generated queue based on 
-            properties of a Song such as bpm or artist. Defaults to None.
-            value(str): A value of a criteria to filter a queue even further. 
-            Can only be used with a valid criteria parameter. Defaults to None.
 
         Returns:
-            list(Song): The generated queue of Songs.
+            set: A set of songs that are in both playlists.
+        """
+        return set(self.song_list | other.song_list)
+
+    def generate_queue(self, preference = None, reverse = False):  # Devon
+        """ Shuffles the order of Songs in the Playlist. Can be shuffled 
+        randomly or sorted with a user preference and an optional value 
+        for that preference.
+
+        Args:
+            preference(str): A preference to sort the Playlist by. Defaults to None.
+            value(str): A value of a preference to filter the Playlist even 
+            further. Can only be used with a valid preference parameter. 
+            Defaults to None.
+
+        Side effects:
+            Updates the value of 'song_list'.
         """
         queue = []
 
-        if (criteria is not None and value is not None):
-            # Will add functionality to only include songs that match the attribute given in criteria and value
-            queue = [song for song in self.song_list]
-        elif (criteria is not None and value is None):
-            # Will add cunctionality to only include songs that match the attribute given in criteria
-            queue = sorted(self.song_list)
-        elif (criteria is None and value is not None):
+        if (preference is not None and value is not None):
+            queue = sorted(self.song_list, key = lambda s: s.)
+        elif (preference is not None and value is None):
+            queue = sorted(self.song_list, key = lambda s:)
+        elif (preference is None and value is not None):
             raise ValueError(
                 "You need a specific property before requesting a value!")
         else:
@@ -128,29 +139,59 @@ class Playlist:
         """ Generates a name for the Playlist based off of the shared 
         properties of Songs in the Playlist.
 
+        Returns:
+            str: The generated name of the Playlist.
         """
+        property_set = {}
+        for song in self.song_list:
+            property_set
 
-    def add_song(self):  # Ethan
-        """Ask user if they want to add a song to the palylist by input the 
-        information of the song.
+        name = f"{max(property_set)} Mix"
+
+    def add_song(self, song=None, artists=None, track_name=None):  # Ethan
+        """
+        Adds a song to the playlist
 
         Args:
-            song (str): a song
+            song (obj): the existing song
+            artists (str): the artists involved in the song
+            track_name (str): the name of the song
         """
-        answer = input(
-            "Do you want to add a song to your Playlist? Please answer 'yes' or 'no'")
-        if answer == "yes":
-            name = input("Please enter the name of the song")
-            artists = input("Please enter the artist(s) of the song")
-            genre = input("Please enter the genre of the song")
-            release_year = input("Please enter the release year of the song")
-            bpm = input("Please enter the bpm of the song")
-
-            new_song = Song(name, artists, genre, release_year, bpm)
-            self.song_list.append(new_song)
-            print("Your song has been added to the Playlist!")
+        if song is None and artists is None and track_name is None:
+            raise ValueError("No values inputted (song, artists, track_name)")
+        existing_songs = [song.track_name for song in self.song_list]
+        if track_name in existing_songs:
+            print(f"The song '{track_name}' already exists in the playlist.")
         else:
-            print("No song will be add")
+            if artists is not None and track_name is not None:
+                new_song = Song(artists, track_name)
+                self.song_list.append(new_song)
+                print("Your song has been added to the Playlist!")
+            elif song is not None:
+                self.song_list.append(song)
+                
+    def remove_song(self, song = None, artists = None, track_name = None, ):
+        """
+        Remove a song from the Playlist
+        
+        Args:
+            artists (str): the artists involved in the song
+            song (obj): the existing song
+            track_name (str): the name of the song
+        """
+        if song is None and artists is None and track_name is None:
+            raise ValueError("No values inputted (song, artists, track_name)")
+        existing_songs = [song.track_name for song in self.song_list]
+        if track_name in existing_songs:
+            if song is not None:
+                song = Song(artists, track_name)
+                self.song_list.remove(song)
+                print(f"'{track_name}' have been removed from the Playlist!")
+            else:
+                self.song_list.remove(song)
+        else:
+            raise ValueError("The song is not in the Playlist!")         
+                
 
     def sort_by_popularity(self, ascending=True):
         """ This method can sort the songs by popularity
@@ -158,7 +199,7 @@ class Playlist:
             ascending (bool): If True, sort in ascending order; otherwise, sort in decending order,
         """
         # Sorting the songs based on the populairty attribute of each songs
-        self.songs.sort(key=lambda song: song.popularity,
+        self.song_list.sort(key=lambda song: song.popularity,
                         reverse=not ascending)
 
 # Lexin
@@ -178,9 +219,6 @@ class User:
             "popularity": None,
             "duration": None,
             "explicit": None,  # True or False or Unknown
-            "danceability": None,
-            "energy": None,
-            "tempo": None,
             "genre": None,
 
         }
@@ -188,15 +226,11 @@ class User:
     # Sets the user's preferences for the playlist based on dataset column names
     def user_preferences(self, popularity=None,
                          duration=None, explicit=None,
-                         danceability=None, energy=None,
-                         tempo=None, genre=None):
+                         genre=None):
 
         self.preferences["popularity"] = popularity
         self.preferences["duration"] = duration
         self.preferences["explicit"] = explicit
-        self.preferences["danceability"] = danceability
-        self.preferences["energy"] = energy
-        self.preferences["tempo"] = tempo
         self.preferences["genre"] = genre
 
 # Justin
@@ -216,12 +250,36 @@ class User:
                     filtered_results.append(song)
 
 
-def main(file_path):
-    """ Reads from a file and generates Songs.
+def read_songs(filepath):
+    """Reads a file and generates Songs.
 
-    Args: file_path (str): The path to the file containing raw text data.
+    Args:
+        filepath (str): The path to the file containing raw text data.
     """
 
+    with open("spotifydata.txt") as file:
+        for line in islice(file, 1, None):
+
+            pass
+
+
+def main(user, text_file, preferences):
+    """The main function of the program.
+    """
+
+    # Testing the Song class
+    song1 = Song("Ariana Grande", "Positions")
+    song2 = Song("Ariana Grande", "34+35")
+
+    print(repr(song1))
+
+    # Testing the Playlist class
+    playlist = Playlist()
+    playlist.add_song(song1)
+    playlist.add_song(song2)
+    playlist.add_song(artists="Ariana Grande", track_name="POV")
+
+    print(playlist)
 
 def parse_args(arglist):
     """ Parses command-line arguments
@@ -230,8 +288,13 @@ def parse_args(arglist):
         arglist (list): a list of command-line arguments.
     """
     parser = ArgumentParser()
+    parser.add_argument("user", help="The user using the Playlist function")
+    parser.add_argument("preferences", help="The user's preferences")
+    parser.add_argument("file_path", help="The path to the raw song data")
+    args = parser.parse_args(arglist)
+    return args
 
 
 if __name__ == "__main__":
     args = parse_args(sys.argv[1:])
-    main()
+    main(args.user, args.preferences, args.file_path)
