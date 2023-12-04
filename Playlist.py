@@ -52,7 +52,7 @@ class Song:
         Returns:
             str: A string representation of the song.
         """
-        return f"{self.track_name} by {self.artists}"
+        return f"'{self.track_name}' by {self.artists}"
     
     def __repr__ (self):
         """Returns a formal string representation for the song.
@@ -141,7 +141,7 @@ class Playlist:
 
         """
 
-    def add_song(self, artists, track_name): #Ethan
+    def add_song(self, song = None, artists = None, track_name = None): #Ethan
         """
         Adds a song to the playlist
 
@@ -150,13 +150,18 @@ class Playlist:
             album_name (str): the name of the album the song is under
             track_name (str): the name of the song
         """
+        if song is None and artists is None and track_name is None:
+            raise ValueError("No values inputted (song, artists, track_name)")
         existing_songs = [song.track_name for song in self.song_list]
         if track_name in existing_songs:
             print(f"The song '{track_name}' already exists in the playlist.")
         else:
-            new_song = Song(artists, track_name)
-            self.song_list.append(new_song)
-            print("Your song has been added to the Playlist!")
+            if artists is not None and track_name is not None:
+                new_song = Song(artists, track_name)
+                self.song_list.append(new_song)
+                print("Your song has been added to the Playlist!")
+            elif song is not None: 
+                self.song_list.append(song)
                 
 
     def sort_by_popularity(self, ascending=True):
@@ -221,7 +226,21 @@ def read_songs(filepath):
 def main():
     """The main function of the program.
     """
-    pass
+    
+    # Testing the Song class
+    song1 = Song("Ariana Grande", "Positions")
+    song2 = Song("Ariana Grande", "34+35")
+    
+    print(repr(song1))
+    
+    # Testing the Playlist class
+    playlist = Playlist()
+    playlist.add_song(song1)
+    playlist.add_song(song2)
+    playlist.add_song(artists = "Ariana Grande", track_name = "POV")
+    
+    print(playlist)
+
 
 def parse_args(arglist):
     """ Parses command-line arguments
