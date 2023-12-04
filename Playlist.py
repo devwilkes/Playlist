@@ -176,7 +176,7 @@ class Playlist:
             ascending (bool): If True, sort in ascending order; otherwise, sort in decending order,
         """
         # Sorting the songs based on the populairty attribute of each songs
-        self.songs.sort(key=lambda song: song.popularity,
+        self.song_list.sort(key=lambda song: song.popularity,
                         reverse=not ascending)
 
 # Lexin
