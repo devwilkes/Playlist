@@ -108,26 +108,26 @@ class Playlist:
         """
         return set(self.song_list | other.song_list)
 
-    def generate_queue(self, preference = None, value = None):  # Devon
-        """ Creates a queue of songs from the Playlist by changing the order 
-        of Songs in the Playlist. Can be generated randomly or 
-        sorted with a user preference and an optional value for that preference.
+    def generate_queue(self, preference = None, reverse = False):  # Devon
+        """ Shuffles the order of Songs in the Playlist. Can be shuffled 
+        randomly or sorted with a user preference and an optional value 
+        for that preference.
 
         Args:
-            criteria(str): A preference to sort the Playlist by. Defaults to None.
+            preference(str): A preference to sort the Playlist by. Defaults to None.
             value(str): A value of a preference to filter the Playlist even 
             further. Can only be used with a valid preference parameter. 
             Defaults to None.
 
-        Returns:
-            list(Song): The generated queue of Songs.
+        Side effects:
+            Updates the value of 'song_list'.
         """
         queue = []
 
         if (preference is not None and value is not None):
-            queue = [song for song in self.song_list]
+            queue = sorted(self.song_list, key = lambda s: s.)
         elif (preference is not None and value is None):
-            queue = sorted(self.song_list, key =)
+            queue = sorted(self.song_list, key = lambda s:)
         elif (preference is None and value is not None):
             raise ValueError(
                 "You need a specific property before requesting a value!")
