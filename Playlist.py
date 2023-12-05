@@ -44,7 +44,6 @@ class Song:
             "popularity": 0,
             "duration": 0,
             "explicit": False,
-            "tempo": 0,
             "genre": '',
             "album_name": ''
         }
