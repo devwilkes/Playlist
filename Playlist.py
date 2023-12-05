@@ -44,7 +44,6 @@ class Song:
             "popularity": 0,
             "duration": 0,
             "explicit": False,
-            "tempo": 0,
             "genre": '',
             "album_name": ''
         }
@@ -79,7 +78,7 @@ class Playlist:
         Args:
             song_list(list): A list of Songs present in the Playlist.
 
-        Side effects: Sets attributes for 'song_list'.
+        Side effects: Sets attributes for 'song_list' and 'name'.
         """
         self.song_list = []
         self.name = ""
@@ -99,7 +98,7 @@ class Playlist:
     def __repr__(self):
         """ Returns a formal string representation of the playlist
         """
-        playlist = f"Playlist({self.playlist_name})"
+        playlist = f"Playlist()"
 
     def __add__(self, other):
         """ Adds two playlists together
@@ -119,11 +118,17 @@ class Playlist:
         Side effects: 
             Updates the value of 'name'.
         """
-        genre_set = {}
+        genre_list = []
         for song in self.song_list:
-            genre_set.update(song.properties.get("genre"))
+            genre = song.properties.get("genre")
+            if genre is not "":
+                genre_list.append(genre)
 
-        name = f"{max(genre_set)} Mix"
+        name = max(set(genre_list), key=genre_list.count)
+        if (name == ""):
+            self.name == "Random Mix"
+        else:
+            self.name = f"{name} Mix"
 
     def add_song(self, song=None, artists=None, track_name=None):  # Ethan
         """
@@ -138,12 +143,12 @@ class Playlist:
             raise ValueError("No values inputted (song, artists, track_name)")
         existing_songs = [song.track_name for song in self.song_list]
         if track_name in existing_songs:
-            print(f"The song '{track_name}' already exists in the playlist.")
+            print(f"The song '{track_name}' already exists in {self.name}.")
         else:
             if artists is not None and track_name is not None:
                 new_song = Song(artists, track_name)
                 self.song_list.append(new_song)
-                print("Your song has been added to the Playlist!")
+                print(f"Your song has been added to {self.name}!")
             elif song is not None:
                 self.song_list.append(song)
 
@@ -163,7 +168,7 @@ class Playlist:
             if song is not None:
                 song = Song(artists, track_name)
                 self.song_list.remove(song)
-                print(f"'{track_name}' have been removed from the Playlist!")
+                print(f"'{track_name}' have been removed from {self.name}!")
             else:
                 self.song_list.remove(song)
         else:
@@ -240,7 +245,7 @@ class User:
 
         filtered_results = []
         with open("spotifydata.txt") as file:
-            for line in islice(file,1, None):
+            for line in islice(file, 1, None):
                 song_data = line.strip().split(',')
                 artists, track_name = song_data[0], song_data[1]
                 song = Song((artists, track_name))
@@ -286,18 +291,22 @@ def main():
     playlist.add_song(song1)
     playlist.add_song(song2)
     playlist.add_song(artists="Ariana Grande", track_name="POV")
+    playlist.generate_name()
+    print(playlist.name)
+
     print(playlist)
     print("*" * 40)
-    
+
     print("*" * 20 + "Creating Playlist 2" + "*" * 20)
     playlist2 = Playlist()
     playlist2.add_song(track_name='Dynamite', artists='BTS')
     playlist2.add_song(track_name='Fake Love', artists='BTS')
     print(playlist2)
     print("*" * 40)
-    
+
     print("*" * 20 + "Adding two playlists" + "*" * 20)
     print(playlist + playlist2)
+
 
 def parse_args(arglist):
     """ Parses command-line arguments
