@@ -283,12 +283,12 @@ def parse_args(arglist):
     Args:
         arglist (list): a list of command-line arguments.
     """
-    parser = ArgumentParser()
-    parser.add_argument("user", help="The user using the Playlist function")
-    parser.add_argument("preferences", help="The user's preferences")
-    parser.add_argument("file_path", help="The path to the raw song data")
-    args = parser.parse_args(arglist)
-    return args
+    # parser = ArgumentParser()
+    # parser.add_argument("user", help="The user using the Playlist function")
+    # parser.add_argument("preferences", help="The user's preferences")
+    # parser.add_argument("file_path", help="The path to the raw song data")
+    # args = parser.parse_args(arglist)
+    # return args
 
 
 if __name__ == "__main__":
