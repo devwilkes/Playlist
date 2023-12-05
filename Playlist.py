@@ -225,7 +225,7 @@ class User:
         self.playlist.song_list = queue
 
 # Justin
-    def filtered_songs(self, user_preferences):
+    def filtered_songs(self):
         """Filters the list of songs based on user-provided criteria
 
         Returns:
