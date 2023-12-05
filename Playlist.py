@@ -99,7 +99,7 @@ class Playlist:
     def __repr__(self):
         """ Returns a formal string representation of the playlist
         """
-        playlist = f"Playlist({self.playlist_name})"
+        playlist = f"Playlist()"
 
     def __add__(self, other):
         """ Adds two playlists together
@@ -121,7 +121,9 @@ class Playlist:
         """
         genre_list = []
         for song in self.song_list:
-            genre_list.append(song.properties.get("genre"))
+            genre = song.properties.get("genre")
+            if genre is not "":
+                genre_list.append(genre)
 
         name = max(set(genre_list), key=genre_list.count)
         if (name == ""):
@@ -142,12 +144,12 @@ class Playlist:
             raise ValueError("No values inputted (song, artists, track_name)")
         existing_songs = [song.track_name for song in self.song_list]
         if track_name in existing_songs:
-            print(f"The song '{track_name}' already exists in the playlist.")
+            print(f"The song '{track_name}' already exists in {self.name}.")
         else:
             if artists is not None and track_name is not None:
                 new_song = Song(artists, track_name)
                 self.song_list.append(new_song)
-                print("Your song has been added to the Playlist!")
+                print(f"Your song has been added to {self.name}!")
             elif song is not None:
                 self.song_list.append(song)
 
@@ -167,7 +169,7 @@ class Playlist:
             if song is not None:
                 song = Song(artists, track_name)
                 self.song_list.remove(song)
-                print(f"'{track_name}' have been removed from the Playlist!")
+                print(f"'{track_name}' have been removed from {self.name}!")
             else:
                 self.song_list.remove(song)
         else:
