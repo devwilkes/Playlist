@@ -232,19 +232,26 @@ class User:
         self.preferences["genre"] = genre
 
 # Justin
-    def filtered_songs(self):
+    def filtered_songs(self, user_preferences):
         """Filters the list of songs based on user-provided criteria
 
         Returns:
             A refined list of songs that match the user's criteria
         """
+        
         filtered_results = []
         with open("spotifydata.txt") as file:
             for line in file:
                 song_data = line.strip().split(',')
                 song = Song((song_data[0], song_data[2]))
+<<<<<<< HEAD
                 if self.song_matches_preferences(song):
+=======
+                
+                if song.song_matches_preferences(song):
+>>>>>>> refs/remotes/origin/main
                     filtered_results.append(song)
+        return filtered_results
 
 
 def read_songs(filepath):
