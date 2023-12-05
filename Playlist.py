@@ -81,6 +81,7 @@ class Playlist:
         Side effects: Sets attributes for 'song_list'.
         """
         self.song_list = []
+        self.name = ""
 
     def __str__(self):
         """ Returns an informal string representation of the playlist
@@ -107,45 +108,18 @@ class Playlist:
         """
         return set(self.song_list | other.song_list)
 
-    def generate_queue(self, preference=None, reverse=False):  # Devon
-        """ Shuffles the order of Songs in the Playlist. Can be shuffled 
-        randomly or sorted with a user preference and an optional value 
-        for that preference.
-
-        Args:
-            preference(str): A preference to sort the Playlist by. Defaults to None.
-            value(str): A value of a preference to filter the Playlist even 
-            further. Can only be used with a valid preference parameter. 
-            Defaults to None.
-
-        Side effects:
-            Updates the value of 'song_list'.
-        """
-        queue = []
-
-        # if (preference is not None and value is not None):
-        #     queue = sorted(self.song_list, key = lambda s: s.)
-        # elif (preference is not None and value is None):
-        #     queue = sorted(self.song_list, key = lambda s:)
-        # elif (preference is None and value is not None):
-        #     raise ValueError(
-        #         "You need a specific property before requesting a value!")
-        # else:
-        #     queue.shuffle(self.song_list)
-        # return queue
-
     def generate_name(self):  # Devon
-        """ Generates a name for the Playlist based off of the shared 
+        """ Generates a name for the Playlist based off of the shared genre
         properties of Songs in the Playlist.
 
-        Returns:
-            str: The generated name of the Playlist.
+        Side effects: 
+            Updates the value of 'name'.
         """
-        property_set = {}
+        genre_set = {}
         for song in self.song_list:
-            property_set
+            genre_set.update(song.properties.get("genre"))
 
-        name = f"{max(property_set)} Mix"
+        name = f"{max(genre_set)} Mix"
 
     def add_song(self, song=None, artists=None, track_name=None):  # Ethan
         """
@@ -200,8 +174,9 @@ class Playlist:
         self.song_list.sort(key=lambda song: song.popularity,
                             reverse=not ascending)
 
-
 # Lexin
+
+
 class User:
     """ A class for users with playlists
     """
@@ -229,6 +204,27 @@ class User:
         self.preferences["duration"] = duration
         self.preferences["explicit"] = explicit
         self.preferences["genre"] = genre
+
+    def generate_queue(self, preference=None, rev=False):  # Devon
+        """ Shuffles the order of Songs in the User's Playlist. Can be shuffled 
+        randomly or sorted with a user preference and reversed.
+
+        Args:
+            preference(str): A preference to sort the Playlist by. 
+            Defaults to None.
+            reverse(bool): Reverses the order of the newly sorted/shuffled 
+            songs. Defaults to False.
+
+        Side effects:
+            Updates the value of 'playlist'.
+        """
+        queue = []
+        if (preference is not None):
+            queue = sorted(self.playlist.song_list, key=lambda s: s.properties.get(
+                preference), reverse=rev)
+        else:
+            queue.shuffle(self.song_list)
+        self.playlist.song_list = queue
 
 # Justin
     def filtered_songs(self, user_preferences):
