@@ -107,7 +107,10 @@ class Playlist:
         Returns:
             set: A set of songs that are in both playlists.
         """
-        return set(self.song_list | other.song_list)
+        new = set(self.song_list) | set(other.song_list)
+        new_playlist = Playlist()
+        new_playlist.song_list = list(new)
+        return new_playlist
 
     def generate_name(self):  # Devon
         """ Generates a name for the Playlist based off of the shared genre
@@ -264,20 +267,30 @@ def main():
     """The main function of the program.
     """
 
-    # Testing the Song class
+    print("*" * 20 + "Creating Songs" + "*" * 20)
     song1 = Song("Ariana Grande", "Positions")
     song2 = Song("Ariana Grande", "34+35")
-
     print(repr(song1))
+    print(repr(song2))
+    print("*" * 40)
 
-    # Testing the Playlist class
+    print("*" * 20 + "Creating Playlist" + "*" * 20)
     playlist = Playlist()
     playlist.add_song(song1)
     playlist.add_song(song2)
     playlist.add_song(artists="Ariana Grande", track_name="POV")
-
     print(playlist)
-
+    print("*" * 40)
+    
+    print("*" * 20 + "Creating Playlist 2" + "*" * 20)
+    playlist2 = Playlist()
+    playlist2.add_song(track_name='Dynamite', artists='BTS')
+    playlist2.add_song(track_name='Fake Love', artists='BTS')
+    print(playlist2)
+    print("*" * 40)
+    
+    print("*" * 20 + "Adding two playlists" + "*" * 20)
+    print(playlist + playlist2)
 
 def parse_args(arglist):
     """ Parses command-line arguments
