@@ -221,7 +221,7 @@ class User:
             queue = sorted(self.playlist.song_list, key=lambda s: s.properties.get(
                 preference), reverse=rev)
         else:
-            queue.shuffle(self.song_list)
+            queue = random.shuffle(self.playlist.song_list)
         self.playlist.song_list = queue
 
 # Justin
@@ -298,11 +298,11 @@ def main():
     user1 = User("Sandy")
     user2 = User("Bob")
     user3 = User("Patrick")
-    user1.playlist = playlist1
+    user1.playlist = playlist
     user2.playlist = playlist2
     user1.generate_queue()
     user2.generate_queue()
-    print(user1)
+    print(user1.playlist)
 
 
 def parse_args(arglist):
