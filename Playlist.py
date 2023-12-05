@@ -244,8 +244,7 @@ class User:
                 song.properties["explicit"] = bool(int(song_data[6]))
                 song.properties["genre"] = song_data[19]
                 song.properties["album_name"] = song_data[2]
-                
-                
+
                 if song.song_matches_preferences(song):
                     filtered_results.append(song)
         return filtered_results
@@ -280,7 +279,6 @@ def main():
     playlist.add_song(song1)
     playlist.add_song(song2)
     playlist.add_song(artists="Ariana Grande", track_name="POV")
-    playlist.generate_name()
     print(playlist.name)
 
     print(playlist)
@@ -295,6 +293,16 @@ def main():
 
     print("*" * 20 + "Adding two playlists" + "*" * 20)
     print(playlist + playlist2)
+
+    print("*" * 20 + "Generating Queues" + "*" * 20)
+    user1 = User("Sandy")
+    user2 = User("Bob")
+    user3 = User("Patrick")
+    user1.playlist = playlist1
+    user2.playlist = playlist2
+    user1.generate_queue()
+    user2.generate_queue()
+    print(user1)
 
 
 def parse_args(arglist):
