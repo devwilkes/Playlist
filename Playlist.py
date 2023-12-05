@@ -234,7 +234,7 @@ class User:
 
         filtered_results = []
         with open("spotifydata.txt") as file:
-            for line in islice(file, 1, None):
+            for line in islice(file, 2, None):
                 song_data = line.strip().split(',')
                 artists, track_name = song_data[0], song_data[1]
                 song = Song((artists, track_name))
