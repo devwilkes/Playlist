@@ -245,6 +245,13 @@ class User:
                 artists, track_name = song_data[0], song_data[1]
                 song = Song((artists, track_name))
 
+                song.properties["popularity"] = int(song_data[4])
+                song.properties["duration"] = int(song_data[5])
+                song.properties["explicit"] = bool(int(song_data[6]))
+                song.properties["genre"] = song_data[19]
+                song.properties["album_name"] = song_data[2]
+                
+                
                 if song.song_matches_preferences(song):
                     filtered_results.append(song)
         return filtered_results
