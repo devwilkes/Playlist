@@ -79,7 +79,7 @@ class Playlist:
         Args:
             song_list(list): A list of Songs present in the Playlist.
 
-        Side effects: Sets attributes for 'song_list'.
+        Side effects: Sets attributes for 'song_list' and 'name'.
         """
         self.song_list = []
         self.name = ""
@@ -119,11 +119,15 @@ class Playlist:
         Side effects: 
             Updates the value of 'name'.
         """
-        genre_set = {}
+        genre_list = []
         for song in self.song_list:
-            genre_set.update(song.properties.get("genre"))
+            genre_list.append(song.properties.get("genre"))
 
-        name = f"{max(genre_set)} Mix"
+        name = max(set(genre_list), key=genre_list.count)
+        if (name == ""):
+            self.name == "Random Mix"
+        else:
+            self.name = f"{name} Mix"
 
     def add_song(self, song=None, artists=None, track_name=None):  # Ethan
         """
@@ -240,7 +244,7 @@ class User:
 
         filtered_results = []
         with open("spotifydata.txt") as file:
-            for line in islice(file,1, None):
+            for line in islice(file, 1, None):
                 song_data = line.strip().split(',')
                 artists, track_name = song_data[0], song_data[1]
                 song = Song((artists, track_name))
@@ -279,18 +283,22 @@ def main():
     playlist.add_song(song1)
     playlist.add_song(song2)
     playlist.add_song(artists="Ariana Grande", track_name="POV")
+    playlist.generate_name()
+    print(playlist.name)
+
     print(playlist)
     print("*" * 40)
-    
+
     print("*" * 20 + "Creating Playlist 2" + "*" * 20)
     playlist2 = Playlist()
     playlist2.add_song(track_name='Dynamite', artists='BTS')
     playlist2.add_song(track_name='Fake Love', artists='BTS')
     print(playlist2)
     print("*" * 40)
-    
+
     print("*" * 20 + "Adding two playlists" + "*" * 20)
     print(playlist + playlist2)
+
 
 def parse_args(arglist):
     """ Parses command-line arguments
