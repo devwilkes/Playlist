@@ -81,7 +81,7 @@ class Playlist:
         Side effects: Sets attributes for 'song_list' and 'name'.
         """
         self.song_list = []
-        self.name = ""
+        self.name = "Playlist"
 
     def __str__(self):
         """ Returns an informal string representation of the playlist
@@ -111,24 +111,13 @@ class Playlist:
         new_playlist.song_list = list(new)
         return new_playlist
 
-    def generate_name(self):  # Devon
-        """ Generates a name for the Playlist based off of the shared genre
-        properties of Songs in the Playlist.
+    def add_name(self, user_name):  # Devon
+        """ Updates the name for the Playlist with a user input.
 
         Side effects: 
             Updates the value of 'name'.
         """
-        genre_list = []
-        for song in self.song_list:
-            genre = song.properties.get("genre")
-            if genre is not "":
-                genre_list.append(genre)
-
-        name = max(set(genre_list), key=genre_list.count)
-        if (name == ""):
-            self.name == "Random Mix"
-        else:
-            self.name = f"{name} Mix"
+        self.name = user_name
 
     def add_song(self, song=None, artists=None, track_name=None):  # Ethan
         """
