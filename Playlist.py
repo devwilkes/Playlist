@@ -239,7 +239,8 @@ class User:
         with open("spotifydata.txt") as file:
             for line in file:
                 song_data = line.strip().split(',')
-                song = Song((song_data[0], song_data[2]))
+                artists, track_name = song_data[0], song_data[2]
+                song = Song((artists, track_name))
 
                 if song.song_matches_preferences(song):
                     filtered_results.append(song)
