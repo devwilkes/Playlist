@@ -171,9 +171,57 @@ class Playlist:
         # Sorting the songs based on the populairty attribute of each songs
         self.song_list.sort(key=lambda song: song.popularity,
                             reverse=not ascending)
+        
+    def matches_preferences(self, song):
+        """Checks if a song matches the user's preferences
+
+        Args:
+            song (Song): A song object
+
+        Returns:
+            bool: True if the song matches the user's preferences, False otherwise
+        """
+        for key, value in self.preferences.items():
+            if value is not None:
+                if key == "explicit":
+                    if song.properties[key] != value:
+                        return False
+                elif key == "genre":
+                    if song.properties[key] != value:
+                        return False
+                elif key == "duration":
+                    if song.properties[key] > value:
+                        return False
+                elif key == "popularity":
+                    if song.properties[key] < value:
+                        return False
+        return True
 
 # Lexin
+def matches_preferences(user, song):
+        """Checks if a song matches the user's preferences
 
+        Args:
+            song (Song): A song object
+
+        Returns:
+            bool: True if the song matches the user's preferences, False otherwise
+        """
+        for key, value in user.preferences.items():
+            if value is not None:
+                if key == "explicit":
+                    if song.properties[key] != value:
+                        return False
+                elif key == "genre":
+                    if song.properties[key] != value:
+                        return False
+                elif key == "duration":
+                    if song.properties[key] > value:
+                        return False
+                elif key == "popularity":
+                    if song.properties[key] < value:
+                        return False
+        return True
 
 class User:
     """ A class for users with playlists
@@ -225,7 +273,7 @@ class User:
         self.playlist.song_list = queue
 
 # Justin
-    def filtered_songs(self):
+    def filter_songs(self):
         """Filters the list of songs based on user-provided criteria
 
         Returns:
@@ -233,23 +281,31 @@ class User:
         """
 
         filtered_results = []
-        with open("spotifydata.txt") as file:
+        pattern = r'''(?x)^(\d+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t
+                        (\d+)\t(\d+)\t(FALSE|TRUE)\t([\d.]+)\t(.+?)\t(\d+)\t
+                        ([-.\d]+)\t(\d+)\t([\d.]+)\t(.+?)\t(.+?)\t([\d.]+)\t
+                        (.+?)\t([\d.]+)\t(\d+)\t([^\t]+)$'''
+                    
+        with open("dataset.txt", encoding = 'utf-8') as file:
+
             for line in islice(file, 1, None):
-                song_data = line.strip().split(',')
-                artists, track_name = song_data[0], song_data[1]
-                song = Song((artists, track_name))
-
-                song.properties["popularity"] = int(song_data[4])
-                song.properties["duration"] = int(song_data[5])
-                song.properties["explicit"] = bool(int(song_data[6]))
-                song.properties["genre"] = song_data[19]
-                song.properties["album_name"] = song_data[2]
-
-                if song.song_matches_preferences(song):
+                match = re.search(pattern, line.strip())
+                artists, track_name = match.group(3), match.group(5)
+                song = Song(artists, track_name)
+                
+                song.properties['popularity'] = int(match.group(6))
+                song.properties['duration'] = int(match.group(7))
+                song.properties['explicit'] = bool(match.group(8))
+                song.properties['genre'] = match.group(21)
+                song.properties['album_name']= match.group(4)
+            
+                if matches_preferences(self, song):
                     filtered_results.append(song)
-        return filtered_results
+                
+        for song in filtered_results:
+            self.playlist.add_song(song)
 
-
+   
 def read_songs(filepath):
     """Reads a file and generates Songs.
 
@@ -294,16 +350,11 @@ def main():
     print("*" * 20 + "Adding two playlists" + "*" * 20)
     print(playlist + playlist2)
 
-    print("*" * 20 + "Generating Queues" + "*" * 20)
-    user1 = User("Sandy")
-    user2 = User("Bob")
-    user3 = User("Patrick")
-    user1.playlist = playlist
-    user2.playlist = playlist2
-    user1.generate_queue()
-    user2.generate_queue()
+    print("*" * 20 + "Creating User" + "*" * 20)
+    user1 = User("Justin")
+    user1.user_preferences(genre = "k-pop")
+    user1.filter_songs()
     print(user1.playlist)
-
 
 def parse_args(arglist):
     """ Parses command-line arguments
