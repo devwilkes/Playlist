@@ -91,7 +91,7 @@ class Playlist:
         """
         playlist = "Playlist: \n"
         for song in self.song_list:
-            playlist += f"{song.track_name} by {song.artists}\n"
+            playlist += f"'{song.track_name}' by {song.artists}\n"
 
         return playlist
 
