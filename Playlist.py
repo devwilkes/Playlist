@@ -123,16 +123,16 @@ class Playlist:
         """
         queue = []
 
-        if (preference is not None and value is not None):
-            queue = sorted(self.song_list, key = lambda s: s.)
-        elif (preference is not None and value is None):
-            queue = sorted(self.song_list, key = lambda s:)
-        elif (preference is None and value is not None):
-            raise ValueError(
-                "You need a specific property before requesting a value!")
-        else:
-            queue.shuffle(self.song_list)
-        return queue
+        # if (preference is not None and value is not None):
+        #     queue = sorted(self.song_list, key = lambda s: s.)
+        # elif (preference is not None and value is None):
+        #     queue = sorted(self.song_list, key = lambda s:)
+        # elif (preference is None and value is not None):
+        #     raise ValueError(
+        #         "You need a specific property before requesting a value!")
+        # else:
+        #     queue.shuffle(self.song_list)
+        # return queue
 
     def generate_name(self):  # Devon
         """ Generates a name for the Playlist based off of the shared 
@@ -201,9 +201,8 @@ class Playlist:
         self.song_list.sort(key=lambda song: song.popularity,
                         reverse=not ascending)
 
+
 # Lexin
-
-
 class User:
     """ A class for users with playlists
     """
@@ -244,7 +243,6 @@ class User:
             for line in file:
                 song_data = line.strip().split(',')
                 song = Song((song_data[0], song_data[2]))
-                
                 if self.song_matches_preferences(song):
                     filtered_results.append(song)
 
@@ -262,7 +260,7 @@ def read_songs(filepath):
             pass
 
 
-def main(user, text_file, preferences):
+def main():
     """The main function of the program.
     """
 
@@ -295,5 +293,6 @@ def parse_args(arglist):
 
 
 if __name__ == "__main__":
-    args = parse_args(sys.argv[1:])
-    main(args.user, args.preferences, args.file_path)
+    main()
+    # args = parse_args(sys.argv[1:])
+    # main(args.user, args.preferences, args.file_path)
