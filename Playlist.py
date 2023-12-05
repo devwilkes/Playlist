@@ -22,7 +22,7 @@ class Song:
         _track_genre(str): The genre that the song belongs in.
     """
 
-    def __init__(self, data):
+    def __init__(self, artists, track_name):
         """Initializes a Song object based on attached dataset's column names.
 
         Args:
@@ -36,7 +36,8 @@ class Song:
 
         """
 
-        self.artists, self.track_name = data
+        self.artists = artists
+        self.track_name = track_name
 
         # filterable properties
         self.properties = {
