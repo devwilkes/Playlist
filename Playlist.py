@@ -107,7 +107,7 @@ class Playlist:
         """
         return set(self.song_list | other.song_list)
 
-    def generate_queue(self, preference = None, reverse = False):  # Devon
+    def generate_queue(self, preference=None, reverse=False):  # Devon
         """ Shuffles the order of Songs in the Playlist. Can be shuffled 
         randomly or sorted with a user preference and an optional value 
         for that preference.
@@ -168,11 +168,11 @@ class Playlist:
                 print("Your song has been added to the Playlist!")
             elif song is not None:
                 self.song_list.append(song)
-                
-    def remove_song(self, song = None, artists = None, track_name = None, ):
+
+    def remove_song(self, song=None, artists=None, track_name=None, ):
         """
         Remove a song from the Playlist
-        
+
         Args:
             artists (str): the artists involved in the song
             song (obj): the existing song
@@ -189,8 +189,7 @@ class Playlist:
             else:
                 self.song_list.remove(song)
         else:
-            raise ValueError("The song is not in the Playlist!")         
-                
+            raise ValueError("The song is not in the Playlist!")
 
     def sort_by_popularity(self, ascending=True):
         """ This method can sort the songs by popularity
@@ -199,7 +198,7 @@ class Playlist:
         """
         # Sorting the songs based on the populairty attribute of each songs
         self.song_list.sort(key=lambda song: song.popularity,
-                        reverse=not ascending)
+                            reverse=not ascending)
 
 
 # Lexin
@@ -238,18 +237,14 @@ class User:
         Returns:
             A refined list of songs that match the user's criteria
         """
-        
+
         filtered_results = []
         with open("spotifydata.txt") as file:
             for line in file:
                 song_data = line.strip().split(',')
                 song = Song((song_data[0], song_data[2]))
-<<<<<<< HEAD
-                if self.song_matches_preferences(song):
-=======
-                
+
                 if song.song_matches_preferences(song):
->>>>>>> refs/remotes/origin/main
                     filtered_results.append(song)
         return filtered_results
 
@@ -284,6 +279,7 @@ def main():
     playlist.add_song(artists="Ariana Grande", track_name="POV")
 
     print(playlist)
+
 
 def parse_args(arglist):
     """ Parses command-line arguments
