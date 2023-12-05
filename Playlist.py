@@ -81,6 +81,7 @@ class Playlist:
         Side effects: Sets attributes for 'song_list'.
         """
         self.song_list = []
+        self.name = ""
 
     def __str__(self):
         """ Returns an informal string representation of the playlist
@@ -107,45 +108,18 @@ class Playlist:
         """
         return set(self.song_list | other.song_list)
 
-    def generate_queue(self, preference = None, reverse = False):  # Devon
-        """ Shuffles the order of Songs in the Playlist. Can be shuffled 
-        randomly or sorted with a user preference and an optional value 
-        for that preference.
-
-        Args:
-            preference(str): A preference to sort the Playlist by. Defaults to None.
-            value(str): A value of a preference to filter the Playlist even 
-            further. Can only be used with a valid preference parameter. 
-            Defaults to None.
-
-        Side effects:
-            Updates the value of 'song_list'.
-        """
-        queue = []
-
-        # if (preference is not None and value is not None):
-        #     queue = sorted(self.song_list, key = lambda s: s.)
-        # elif (preference is not None and value is None):
-        #     queue = sorted(self.song_list, key = lambda s:)
-        # elif (preference is None and value is not None):
-        #     raise ValueError(
-        #         "You need a specific property before requesting a value!")
-        # else:
-        #     queue.shuffle(self.song_list)
-        # return queue
-
     def generate_name(self):  # Devon
-        """ Generates a name for the Playlist based off of the shared 
+        """ Generates a name for the Playlist based off of the shared genre
         properties of Songs in the Playlist.
 
-        Returns:
-            str: The generated name of the Playlist.
+        Side effects: 
+            Updates the value of 'name'.
         """
-        property_set = {}
+        genre_set = {}
         for song in self.song_list:
-            property_set
+            genre_set.update(song.properties.get("genre"))
 
-        name = f"{max(property_set)} Mix"
+        name = f"{max(genre_set)} Mix"
 
     def add_song(self, song=None, artists=None, track_name=None):  # Ethan
         """
@@ -168,11 +142,11 @@ class Playlist:
                 print("Your song has been added to the Playlist!")
             elif song is not None:
                 self.song_list.append(song)
-                
-    def remove_song(self, song = None, artists = None, track_name = None, ):
+
+    def remove_song(self, song=None, artists=None, track_name=None, ):
         """
         Remove a song from the Playlist
-        
+
         Args:
             artists (str): the artists involved in the song
             song (obj): the existing song
@@ -189,8 +163,7 @@ class Playlist:
             else:
                 self.song_list.remove(song)
         else:
-            raise ValueError("The song is not in the Playlist!")         
-                
+            raise ValueError("The song is not in the Playlist!")
 
     def sort_by_popularity(self, ascending=True):
         """ This method can sort the songs by popularity
@@ -199,10 +172,11 @@ class Playlist:
         """
         # Sorting the songs based on the populairty attribute of each songs
         self.song_list.sort(key=lambda song: song.popularity,
-                        reverse=not ascending)
-
+                            reverse=not ascending)
 
 # Lexin
+
+
 class User:
     """ A class for users with playlists
     """
@@ -231,6 +205,27 @@ class User:
         self.preferences["explicit"] = explicit
         self.preferences["genre"] = genre
 
+    def generate_queue(self, preference=None, rev=False):  # Devon
+        """ Shuffles the order of Songs in the User's Playlist. Can be shuffled 
+        randomly or sorted with a user preference and reversed.
+
+        Args:
+            preference(str): A preference to sort the Playlist by. 
+            Defaults to None.
+            reverse(bool): Reverses the order of the newly sorted/shuffled 
+            songs. Defaults to False.
+
+        Side effects:
+            Updates the value of 'playlist'.
+        """
+        queue = []
+        if (preference is not None):
+            queue = sorted(self.playlist.song_list, key=lambda s: s.properties.get(
+                preference), reverse=rev)
+        else:
+            queue.shuffle(self.song_list)
+        self.playlist.song_list = queue
+
 # Justin
     def filtered_songs(self, user_preferences):
         """Filters the list of songs based on user-provided criteria
@@ -238,18 +233,14 @@ class User:
         Returns:
             A refined list of songs that match the user's criteria
         """
-        
+
         filtered_results = []
         with open("spotifydata.txt") as file:
             for line in file:
                 song_data = line.strip().split(',')
                 song = Song((song_data[0], song_data[2]))
-<<<<<<< HEAD
-                if self.song_matches_preferences(song):
-=======
-                
+
                 if song.song_matches_preferences(song):
->>>>>>> refs/remotes/origin/main
                     filtered_results.append(song)
         return filtered_results
 
@@ -285,18 +276,19 @@ def main():
 
     print(playlist)
 
+
 def parse_args(arglist):
     """ Parses command-line arguments
 
     Args:
         arglist (list): a list of command-line arguments.
     """
-    parser = ArgumentParser()
-    parser.add_argument("user", help="The user using the Playlist function")
-    parser.add_argument("preferences", help="The user's preferences")
-    parser.add_argument("file_path", help="The path to the raw song data")
-    args = parser.parse_args(arglist)
-    return args
+    # parser = ArgumentParser()
+    # parser.add_argument("user", help="The user using the Playlist function")
+    # parser.add_argument("preferences", help="The user's preferences")
+    # parser.add_argument("file_path", help="The path to the raw song data")
+    # args = parser.parse_args(arglist)
+    # return args
 
 
 if __name__ == "__main__":
