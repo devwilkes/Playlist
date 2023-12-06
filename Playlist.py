@@ -328,42 +328,6 @@ def main():
         Prints out the results of the program.
     """
 
-    print("*" * 20 + "Creating Songs" + "*" * 20)
-    song1 = Song("Ariana Grande", "Positions")
-    song2 = Song("Ariana Grande", "34+35")
-    print(repr(song1))
-    print(repr(song2))
-    print("*" * 40)
-
-    print("*" * 20 + "Creating Playlist" + "*" * 20)
-    playlist = Playlist()
-    playlist.add_song(song1)
-    playlist.add_song(song2)
-    playlist.add_song(artists="Ariana Grande", track_name="POV")
-    print(playlist.name)
-
-    print(playlist)
-    print("*" * 40)
-
-    print("*" * 20 + "Creating Playlist 2" + "*" * 20)
-    playlist2 = Playlist()
-    playlist2.add_song(track_name='Dynamite', artists='BTS')
-    playlist2.add_song(track_name='Fake Love', artists='BTS')
-    print(playlist2)
-    print("*" * 40)
-
-    print("*" * 20 + "Adding two playlists" + "*" * 20)
-    print(playlist + playlist2)
-
-    print("*" * 20 + "Creating User" + "*" * 20)
-    user1 = User("Justin")
-    user1.user_preferences(genre="k-pop", popularity=85)
-    print(user1.playlist)
-    user1.filter_songs()
-    print(user1.playlist)
-    user1.playlist.sort_by_popularity()
-    print(user1.playlist)
-
 
 def parse_args(arglist):
     """ Parses command-line arguments
