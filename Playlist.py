@@ -12,14 +12,14 @@ class Song:
 
     Attirbutes:
         artists(str): the artists involved in the song
-        album_name(str): the name of the album the song is under
         track_name(str): the name of the song
 
-        _popularity(int): the rating of popularity based on the dataset
-        _duration_ms(int): how long the song is in milliseconds
-        _explicit(bool): if the song is explicit or not
-        _tempo(int): the song's tempo
-        _track_genre(str): The genre that the song belongs in.
+        popularity(int): the rating of popularity based on the dataset
+        duration_ms(int): how long the song is in milliseconds
+        explicit(bool): if the song is explicit or not
+        track_genre(str): The genre that the song belongs in.
+        album_name(str): the name of the album the song is under
+
     """
 
     def __init__(self, artists, track_name):
@@ -52,7 +52,7 @@ class Song:
         """Returns an informal string representation of the song,
 
         Returns:
-            str: A string representation of the song.
+            str: An informal representation of the song.
         """
         return f"'{self.track_name}' by {self.artists}"
 
@@ -70,6 +70,7 @@ class Playlist:
 
     Attributes:
         song_list(list): a list containing Song objects present in the Playlist.
+        name(str): the name of the playlist (default: "Playlist")
     """
 
     def __init__(self):
@@ -78,7 +79,8 @@ class Playlist:
         Args:
             song_list(list): A list of Songs present in the Playlist.
 
-        Side effects: Sets attributes for 'song_list' and 'name'.
+        Side effects:
+            Sets attributes for 'song_list' and 'name'.
         """
         self.song_list = []
         self.name = "Playlist"
@@ -104,7 +106,7 @@ class Playlist:
         """ Adds two playlists together
 
         Returns:
-            set: A set of songs that are in both playlists.
+            list: A list of songs that are in both playlists.
         """
         new = set(self.song_list) | set(other.song_list)
         new_playlist = Playlist()
@@ -119,7 +121,7 @@ class Playlist:
         """
         self.name = user_name
 
-    def add_song(self, song=None, artists=None, track_name=None):  # Ethan
+    def add_song(self, song=None, artists=None, track_name=None):
         """
         Adds a song to the playlist
 
@@ -143,12 +145,15 @@ class Playlist:
 
     def remove_song(self, song=None, artists=None, track_name=None, ):
         """
-        Remove a song from the Playlist
+        Removes a song from the Playlist
 
         Args:
             artists (str): the artists involved in the song
             song (obj): the existing song
             track_name (str): the name of the song
+        
+        Raises:
+            ValueError: If the song is not in the Playlist
         """
         if song is None and artists is None and track_name is None:
             raise ValueError("No values inputted (song, artists, track_name)")
@@ -166,38 +171,15 @@ class Playlist:
     def sort_by_popularity(self, ascending=True):
         """ This method can sort the songs by popularity
         Args:
-            ascending (bool): If True, sort in ascending order; otherwise, sort in decending order,
+            ascending (bool): If True, sort in ascending order; 
+                                otherwise, sort in decending order,
+        
+        Side effects:
+            Sorts the 'song_list' attribute.
         """
         # Sorting the songs based on the populairty attribute of each songs
         self.song_list.sort(key=lambda song: song.properties.get('popularity'),
                             reverse=not ascending)
-
-    def matches_preferences(self, song):
-        """Checks if a song matches the user's preferences
-
-        Args:
-            song (Song): A song object
-
-        Returns:
-            bool: True if the song matches the user's preferences, False otherwise
-        """
-        for key, value in self.preferences.items():
-            if value is not None:
-                if key == "explicit":
-                    if song.properties[key] != value:
-                        return False
-                elif key == "genre":
-                    if song.properties[key] != value:
-                        return False
-                elif key == "duration":
-                    if song.properties[key] > value:
-                        return False
-                elif key == "popularity":
-                    if song.properties[key] < value:
-                        return False
-        return True
-
-# Lexin
 
 
 def matches_preferences(user, song):
@@ -339,22 +321,11 @@ class User:
 
         return queue
 
-
-def read_songs(filepath):
-    """Reads a file and generates Songs.
-
-    Args:
-        filepath (str): The path to the file containing raw text data.
-    """
-
-    with open("spotifydata.txt") as file:
-        for line in islice(file, 1, None):
-
-            pass
-
-
 def main():
     """The main function of the program.
+    
+    Side effects:
+        Prints out the results of the program.
     """
 
     print("*" * 20 + "Creating Songs" + "*" * 20)
