@@ -92,7 +92,7 @@ class Playlist:
             str: A string representation of the playlist.
         """
         
-        playlist = "Playlist: \n"
+        playlist = f"Playlist {self.name} : \n"
         for song in self.song_list:
             playlist += f"'{song.track_name}' by {song.artists}\n"
 
@@ -103,6 +103,7 @@ class Playlist:
         """
         playlist = f'Playlist {self.name}: \n'
         for song in self.song_list:
+            playlist += f'\n'
             playlist += f"*****'{song.track_name}' by {song.artists}*****\n"
             playlist += "{\n"
             for key, value in song.properties.items():
@@ -267,7 +268,7 @@ class User:
         self.preferences["explicit"] = explicit
         self.preferences["genre"] = genre
 
-# Justin
+
     def filter_songs(self):
         """Filters the list of songs based on user-provided criteria
 
@@ -345,17 +346,28 @@ def main(name, playlist_name, popularity, duration, explicit, genre):
     Side effects:
         Prints out the results of the program.
     """
+    print(f'--USER CREATED : {name}')
+    print(f'--PLAYLIST CREATED : {playlist_name}')
+    print('-' * 100 + '\n')
     user = User(name)
     user.playlist.add_name(playlist_name)
-    
     user.preferences["popularity"] = int(popularity) if popularity.lower() != 'none' else None
     user.preferences["duration"] = int(duration) if duration.lower() != 'none' else None
     user.preferences["explicit"] = explicit.lower() != 'none' and explicit.lower() == 'true'
     user.preferences["genre"] = genre if genre.lower() != 'none' else None
-
+    print(f'--USER PREFERENCES : {str(user.preferences)}\n')
+    print('-' * 100 + '\n')
+    
+    print(f'--FILTERING SONGS BASED ON USER PREFERENCES')
+    print('-' * 100 + '\n')
     user.filter_songs()
-    print(user.preferences)
+    
     print(user.playlist)
+    
+    print('-' * 100 + '\n')
+    print(f'--SORTING SONGS BY POPULARITY\n')
+    user.playlist.sort_by_popularity()
+    
     print(repr(user.playlist))
 
 def parse_args(arglist):
