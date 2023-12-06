@@ -98,7 +98,7 @@ class Playlist:
     def __repr__(self):
         """ Returns a formal string representation of the playlist
         """
-        playlist = f"Playlist()"
+        return f"Playlist()"
 
     def __add__(self, other):
         """ Adds two playlists together
