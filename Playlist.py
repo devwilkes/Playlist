@@ -91,6 +91,7 @@ class Playlist:
         Returns:
             str: A string representation of the playlist.
         """
+        
         playlist = "Playlist: \n"
         for song in self.song_list:
             playlist += f"'{song.track_name}' by {song.artists}\n"
@@ -100,7 +101,15 @@ class Playlist:
     def __repr__(self):
         """ Returns a formal string representation of the playlist
         """
-        return f"Playlist {self.name}: \n{self.song_list}\n"
+        playlist = f'Playlist {self.name}: \n'
+        for song in self.song_list:
+            playlist += f"*****'{song.track_name}' by {song.artists}*****\n"
+            playlist += "{\n"
+            for key, value in song.properties.items():
+                playlist += f"{key}: {value},\n "
+            playlist += "}\n"
+            
+        return playlist
 
     def __add__(self, other):
         """ Adds two playlists together
@@ -347,6 +356,7 @@ def main(name, playlist_name, popularity, duration, explicit, genre):
     user.filter_songs()
     print(user.preferences)
     print(user.playlist)
+    print(repr(user.playlist))
 
 def parse_args(arglist):
     """ Parses command-line arguments
