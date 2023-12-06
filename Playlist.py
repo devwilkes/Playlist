@@ -151,7 +151,7 @@ class Playlist:
             artists (str): the artists involved in the song
             song (obj): the existing song
             track_name (str): the name of the song
-        
+
         Raises:
             ValueError: If the song is not in the Playlist
         """
@@ -173,7 +173,7 @@ class Playlist:
         Args:
             ascending (bool): If True, sort in ascending order; 
                                 otherwise, sort in decending order,
-        
+
         Side effects:
             Sorts the 'song_list' attribute.
         """
@@ -210,20 +210,19 @@ def matches_preferences(user, song):
 
 class User:
     """ A class for users with playlists.
-    
+
     Attributes:
         preferences (dict): A dictionary containing user preferences for the playlist
         playlist (Playlist): The user's playlist
         name (str): The username
     """
-    
 
     def __init__(self, username):
         """Initialize a User object
 
         Args:
             username (str): The username for the user.
-            
+
         Side effects:
             Initializes 'name' and 'playlist' attributes.
             Initializes 'preferances' dictionary with default values.
@@ -321,9 +320,10 @@ class User:
 
         return queue
 
+
 def main():
     """The main function of the program.
-    
+
     Side effects:
         Prints out the results of the program.
     """
@@ -364,21 +364,22 @@ def main():
     user1.playlist.sort_by_popularity()
     print(user1.playlist)
 
+
 def parse_args(arglist):
     """ Parses command-line arguments
 
     Args:
         arglist (list): a list of command-line arguments.
     """
-    # parser = ArgumentParser()
-    # parser.add_argument("user", help="The user using the Playlist function")
-    # parser.add_argument("preferences", help="The user's preferences")
-    # parser.add_argument("file_path", help="The path to the raw song data")
-    # args = parser.parse_args(arglist)
-    # return args
+    parser = ArgumentParser()
+    parser.add_argument("user", help="The user using the Playlist function")
+    parser.add_argument("playlist_name", help="The name of the playlist")
+    parser.add_argument("preferences", help="The user's preferences")
+    args = parser.parse_args(arglist)
+    return args
 
 
 if __name__ == "__main__":
     main()
-    # args = parse_args(sys.argv[1:])
-    # main(args.user, args.preferences, args.file_path)
+    args = parse_args(sys.argv[1:])
+    main(args.user, args.playlist_name, args.preferences)
