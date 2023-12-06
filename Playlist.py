@@ -169,7 +169,7 @@ class Playlist:
             ascending (bool): If True, sort in ascending order; otherwise, sort in decending order,
         """
         # Sorting the songs based on the populairty attribute of each songs
-        self.song_list.sort(key=lambda song: song.popularity,
+        self.song_list.sort(key=lambda song: song.properties.get('popularity'),
                             reverse=not ascending)
 
     def matches_preferences(self, song):
@@ -387,8 +387,11 @@ def main():
     print("*" * 20 + "Creating User" + "*" * 20)
     user1 = User("Justin")
     user1.user_preferences(genre="k-pop", popularity=85)
+    print(user1.playlist)
     user1.filter_songs()
-    print(str(user1.playlist))
+    print(user1.playlist)
+    user1.playlist.sort_by_popularity()
+    print(user1.playlist)
 
 def parse_args(arglist):
     """ Parses command-line arguments
