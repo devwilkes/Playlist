@@ -328,18 +328,25 @@ def main(name, playlist_name, popularity, duration, explicit, genre):
     Args:
         name(str): The name of a User.
         playlist_name(str): The name of a Playlist
-        preferences(json): The preferences of the User.
+        popularity(str): The user's preferred popularity
+        duration(str): The user's preferred song duration
+        explicit(str): The user's preferred explicit filter
+        genre(str): The user's preferred music genre
 
     Side effects:
         Prints out the results of the program.
     """
     user = User(name)
     user.playlist.add_name(playlist_name)
-    user.preferences.update("popularity", popularity)
-    user.preferences.update("duration", duration)
-    user.preferences.update("explicit", genre)
-    user.preferences.update("genre", genre)
+    
+    user.preferences["popularity"] = int(popularity) if popularity.lower() != 'none' else None
+    user.preferences["duration"] = int(duration) if duration.lower() != 'none' else None
+    user.preferences["explicit"] = explicit.lower() != 'none' and explicit.lower() == 'true'
+    user.preferences["genre"] = genre if genre.lower() != 'none' else None
 
+    user.filter_songs()
+    print(user.preferences)
+    print(user.playlist)
 
 def parse_args(arglist):
     """ Parses command-line arguments
@@ -353,16 +360,13 @@ def parse_args(arglist):
     parser = ArgumentParser()
     parser.add_argument("name", help="The user using the Playlist function")
     parser.add_argument("playlist_name", help="The name of the playlist")
-    parser.add_argument("popularity" help= "The user's preferred popularity")
-    parser.add_argument("duration", help= "The user's preferred song duration")
-    parser.add_argument("explicit", help= "The user's preferred explicit filter")
-    parser.add_argument("genre" help= "The user's preferred music genre")
+    parser.add_argument("popularity", help="The user's preferred popularity")
+    parser.add_argument("duration", help="The user's preferred song duration")
+    parser.add_argument("explicit", help="The user's preferred explicit filter")
+    parser.add_argument("genre", help="The user's preferred music genre")
     args = parser.parse_args(arglist)
     return args
 
-
 if __name__ == "__main__":
-    main()
     args = parse_args(sys.argv[1:])
-    main(args.name, args.playlist_name, args.popularity,
-         args.duration, args.explicit, args.genre)
+    main(args.name, args.playlist_name, args.popularity, args.duration, args.explicit, args.genre)
