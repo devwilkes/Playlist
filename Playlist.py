@@ -321,12 +321,24 @@ class User:
         return queue
 
 
-def main():
+# Might change later to involve a JSON file instead of parameters for preferences
+def main(name, playlist_name, popularity, duration, explicit, genre):
     """The main function of the program.
+
+    Args:
+        name(str): The name of a User.
+        playlist_name(str): The name of a Playlist
+        preferences(json): The preferences of the User.
 
     Side effects:
         Prints out the results of the program.
     """
+    user = User(name)
+    user.playlist.add_name(playlist_name)
+    user.preferences.update("popularity", popularity)
+    user.preferences.update("duration", duration)
+    user.preferences.update("explicit", genre)
+    user.preferences.update("genre", genre)
 
 
 def parse_args(arglist):
@@ -334,11 +346,17 @@ def parse_args(arglist):
 
     Args:
         arglist (list): a list of command-line arguments.
+
+    Returns:
+        args (argparse): The parsed command-line arguments. 
     """
     parser = ArgumentParser()
-    parser.add_argument("user", help="The user using the Playlist function")
+    parser.add_argument("name", help="The user using the Playlist function")
     parser.add_argument("playlist_name", help="The name of the playlist")
-    parser.add_argument("preferences", help="The user's preferences")
+    parser.add_argument("popularity" help= "The user's preferred popularity")
+    parser.add_argument("duration", help= "The user's preferred song duration")
+    parser.add_argument("explicit", help= "The user's preferred explicit filter")
+    parser.add_argument("genre" help= "The user's preferred music genre")
     args = parser.parse_args(arglist)
     return args
 
@@ -346,4 +364,5 @@ def parse_args(arglist):
 if __name__ == "__main__":
     main()
     args = parse_args(sys.argv[1:])
-    main(args.user, args.playlist_name, args.preferences)
+    main(args.name, args.playlist_name, args.popularity,
+         args.duration, args.explicit, args.genre)
