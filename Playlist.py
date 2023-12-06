@@ -227,10 +227,25 @@ def matches_preferences(user, song):
 
 
 class User:
-    """ A class for users with playlists
+    """ A class for users with playlists.
+    
+    Attributes:
+        preferences (dict): A dictionary containing user preferences for the playlist
+        playlist (Playlist): The user's playlist
+        name (str): The username
     """
+    
 
     def __init__(self, username):
+        """Initialize a User object
+
+        Args:
+            username (str): The username for the user.
+            
+        Side effects:
+            Initializes 'name' and 'playlist' attributes.
+            Initializes 'preferances' dictionary with default values.
+        """
         self.name = username
         self.playlist = Playlist()
 
@@ -248,6 +263,14 @@ class User:
     def user_preferences(self, popularity=None,
                          duration=None, explicit=None,
                          genre=None):
+        """Set the user's preferences for the playlist
+
+        Args:
+            popularity (int, optional): The popularity rating threshold. Defaults to None.
+            duration (int, optional): The maximum duration of songs in milliseconds. Defaults to None.
+            explicit (bool, optional): Specifies if explicit. Defaults to None.
+            genre (str, optional): The preferred genre. Defaults to None.
+        """
 
         self.preferences["popularity"] = popularity
         self.preferences["duration"] = duration
