@@ -91,7 +91,7 @@ class Playlist:
         Returns:
             str: A string representation of the playlist.
         """
-        
+
         playlist = f"Playlist {self.name} : \n"
         for song in self.song_list:
             playlist += f"'{song.track_name}' by {song.artists}\n"
@@ -109,7 +109,7 @@ class Playlist:
             for key, value in song.properties.items():
                 playlist += f"{key}: {value},\n "
             playlist += "}\n"
-            
+
         return playlist
 
     def __add__(self, other):
@@ -239,6 +239,7 @@ class User:
         """
         self.name = username
         self.playlist = Playlist()
+        self.queue = []
 
         # A dict of the user's preferences for the playlist
         self.preferences = {
@@ -267,7 +268,6 @@ class User:
         self.preferences["duration"] = duration
         self.preferences["explicit"] = explicit
         self.preferences["genre"] = genre
-
 
     def filter_songs(self):
         """Filters the list of songs based on user-provided criteria
@@ -301,7 +301,7 @@ class User:
         for song in filtered_results:
             self.playlist.add_song(song)
 
-    def generate_queue(self, preference=None, length=10, rev=False):  # Devon
+    def generate_queue(self, preference=None, length=10, rev=False):
         """ Creates a queue of Songs within the User's playlist to be played. 
         The order of these songs is shuffled by default, but can be sorted, 
         reversed, and specified with a certain length.
@@ -330,6 +330,29 @@ class User:
 
         return queue
 
+    def play_button(self, preference, length, rev):
+        """ 'Plays' a song from the top of the queue. Displays the song that's
+        currently playing as well as what's next in the queue.
+
+        Args:
+            preference (str): _description_
+            length (int): _description_
+            rev (bool): _description_
+
+        Returns:
+            str: A visualization of the song playing and the songs currently 
+            in queue.
+        """
+        self.queue = self.generate_queue(preference, length, rev)
+        playing = f"Now Playing from {self.playlist.name}: {self.queue[0]}\n"
+        self.queue[0].pop
+        playing += f"Up next: {self.queue[0]}"
+        playing += "In queue: \n"
+        counter = 1
+        while counter < len(self.queue):
+            playing += f"{self.queue[counter]} \n"
+        return playing
+
 
 # Might change later to involve a JSON file instead of parameters for preferences
 def main(name, playlist_name, popularity, duration, explicit, genre):
@@ -351,24 +374,28 @@ def main(name, playlist_name, popularity, duration, explicit, genre):
     print('-' * 100 + '\n')
     user = User(name)
     user.playlist.add_name(playlist_name)
-    user.preferences["popularity"] = int(popularity) if popularity.lower() != 'none' else None
-    user.preferences["duration"] = int(duration) if duration.lower() != 'none' else None
-    user.preferences["explicit"] = explicit.lower() != 'none' and explicit.lower() == 'true'
+    user.preferences["popularity"] = int(
+        popularity) if popularity.lower() != 'none' else None
+    user.preferences["duration"] = int(
+        duration) if duration.lower() != 'none' else None
+    user.preferences["explicit"] = explicit.lower(
+    ) != 'none' and explicit.lower() == 'true'
     user.preferences["genre"] = genre if genre.lower() != 'none' else None
     print(f'--USER PREFERENCES : {str(user.preferences)}\n')
     print('-' * 100 + '\n')
-    
+
     print(f'--FILTERING SONGS BASED ON USER PREFERENCES')
     print('-' * 100 + '\n')
     user.filter_songs()
-    
+
     print(user.playlist)
-    
+
     print('-' * 100 + '\n')
     print(f'--SORTING SONGS BY POPULARITY\n')
     user.playlist.sort_by_popularity()
-    
+
     print(repr(user.playlist))
+
 
 def parse_args(arglist):
     """ Parses command-line arguments
@@ -384,11 +411,14 @@ def parse_args(arglist):
     parser.add_argument("playlist_name", help="The name of the playlist")
     parser.add_argument("popularity", help="The user's preferred popularity")
     parser.add_argument("duration", help="The user's preferred song duration")
-    parser.add_argument("explicit", help="The user's preferred explicit filter")
+    parser.add_argument(
+        "explicit", help="The user's preferred explicit filter")
     parser.add_argument("genre", help="The user's preferred music genre")
     args = parser.parse_args(arglist)
     return args
 
+
 if __name__ == "__main__":
     args = parse_args(sys.argv[1:])
-    main(args.name, args.playlist_name, args.popularity, args.duration, args.explicit, args.genre)
+    main(args.name, args.playlist_name, args.popularity,
+         args.duration, args.explicit, args.genre)
