@@ -62,7 +62,7 @@ class Song:
         Returns:
             str: A formal string representation of the song.
         """
-        return f"Song({repr(self.track_name)}, {repr(self.artists)})"
+        return f"Song({(self.track_name)}, {(self.artists)})\n{self.properties}\n"
 
 
 class Playlist:
@@ -98,7 +98,7 @@ class Playlist:
     def __repr__(self):
         """ Returns a formal string representation of the playlist
         """
-        return f"Playlist()"
+        return f"Playlist {self.name}: \n{self.song_list}\n"
 
     def __add__(self, other):
         """ Adds two playlists together
@@ -363,16 +363,9 @@ def main():
 
     print("*" * 20 + "Creating User" + "*" * 20)
     user1 = User("Justin")
-    user1.user_preferences(genre="k-pop")
+    user1.user_preferences(genre="k-pop", popularity=85)
     user1.filter_songs()
-    print(user1.playlist)
-
-    print("*" * 20 + "Generating Queues" + "*" * 20)
-    user1.generate_queue()
-    print(user1.playlist)
-    user1.generate_queue(preference="genre")
-    print(user1.playlist)
-
+    print(str(user1.playlist))
 
 def parse_args(arglist):
     """ Parses command-line arguments
