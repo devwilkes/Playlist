@@ -313,37 +313,31 @@ class User:
             reverse(bool): Reverses the order of the newly sorted/shuffled 
             songs. Defaults to False.
 
-        Returns:
-            list = A queue of Songs.
+        Side effects:
+            Updates the value of 'queue'.
         """
-        queue = []
+        temp_queue = []
         if (preference is not None):
             temp_queue = sorted(self.playlist.song_list, key=lambda s: s.properties.get(
                 preference), reverse=rev)
         else:
             temp_queue = random.sample(
                 self.playlist.song_list, len(self.playlist.song_list))
-
         counter = 0
         while counter < length:
-            queue.append(temp_queue.pop(0))
+            self.queue.append(temp_queue.pop(0))
 
-        return queue
-
-    def play_button(self, preference, length, rev):
+    def play_button(self):
         """ 'Plays' a song from the top of the queue. Displays the song that's
         currently playing as well as what's next in the queue.
-
-        Args:
-            preference (str): _description_
-            length (int): _description_
-            rev (bool): _description_
 
         Returns:
             str: A visualization of the song playing and the songs currently 
             in queue.
+
+        Side effects:
+            Updates the value of 'queue'.
         """
-        self.queue = self.generate_queue(preference, length, rev)
         playing = f"Now Playing from {self.playlist.name}: {self.queue[0]}\n"
         self.queue[0].pop
         playing += f"Up next: {self.queue[0]}"
