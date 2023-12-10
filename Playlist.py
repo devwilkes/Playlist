@@ -149,34 +149,32 @@ class Playlist:
             if artists is not None and track_name is not None:
                 new_song = Song(artists, track_name)
                 self.song_list.append(new_song)
-                print(f"Your song has been added to {self.name}!")
+                print(f"Your song '{track_name}' has been added to"
+                   + f" {self.name}!")
             elif song is not None:
                 self.song_list.append(song)
 
-    def remove_song(self, song=None, artists=None, track_name=None, ):
+    def remove_song(self, artists=None, track_name=None):
         """
         Removes a song from the Playlist
 
         Args:
-            artists (str): the artists involved in the song
-            song (obj): the existing song
-            track_name (str): the name of the song
+            artists (str): the artists involved in the song (optional)
+            track_name (str): the name of the song (optional)
 
         Raises:
             ValueError: If the song is not in the Playlist
         """
-        if song is None and artists is None and track_name is None:
-            raise ValueError("No values inputted (song, artists, track_name)")
-        existing_songs = [song.track_name for song in self.song_list]
-        if track_name in existing_songs:
-            if song is not None:
-                song = Song(artists, track_name)
+        if artists is None or track_name is None:
+            raise ValueError("Both artists and track_name must be provided")
+
+        for song in self.song_list:
+            if song.artists == artists and song.track_name == track_name:
                 self.song_list.remove(song)
-                print(f"'{track_name}' have been removed from {self.name}!")
-            else:
-                self.song_list.remove(song)
-        else:
-            raise ValueError("The song is not in the Playlist!")
+                print(f"Your song '{track_name}' has been removed from"
+                   + f" {self.name}!")
+                return
+        raise ValueError(f"The song '{track_name}' is not in {self.name}.")
 
     def sort_by_popularity(self, ascending=True):
         """ This method can sort the songs by popularity
@@ -379,17 +377,48 @@ def main(name, playlist_name, popularity, duration, explicit, genre):
     print('-' * 100 + '\n')
 
     print(f'--FILTERING SONGS BASED ON USER PREFERENCES')
-    print('-' * 100 + '\n')
     user.filter_songs()
-
     print(user.playlist)
 
     print('-' * 100 + '\n')
-    print(f'--SORTING SONGS BY POPULARITY\n')
+    print(f'--SORTING SONGS BY POPULARITY, USING REPR MAGIC METHOD TO PRINT\n')
     user.playlist.sort_by_popularity()
-
     print(repr(user.playlist))
-
+    print('-' * 100 + '\n')
+    print(f'Creating a sample user and playlist to test functions')
+    # Creating user
+    sample = User('sample')
+    # Creating Playlist, changing name
+    print(f'User Name: {sample.name}')
+    sample.playlist.add_name('sample playlist')
+    print(f'Playlist Name: {sample.playlist.name}')
+    
+    # Adding songs manually to the playlist
+    sample.playlist.add_song(artists = 'BTS', track_name = 'Dynamite')
+    sample.playlist.add_song(artists = 'Keshi', track_name = 'Drunk')
+    sample.playlist.add_song(artists = 'Jack Harlow', 
+                             track_name = 'WHATS POPPIN')
+    
+    # Removing A song from the playlist
+    sample.playlist.remove_song(artists = 'Jack Harlow', 
+                                track_name = 'WHATS POPPIN')
+    # Adding a new song object to the playlist
+    new_song = Song('BTS', 'Fake Love')
+    sample.playlist.add_song(new_song)
+    
+    # Printing out str representation of the playlist
+    print(f'Playlist {sample.playlist.name}: {sample.playlist}')
+    
+    # Printing out repr representation of the playlist
+    print(f'Playlist {sample.playlist.name}: {repr(sample.playlist)}')
+    
+    # Combining both (current) user playlist and sample playlist
+    print('-' * 100 + '\n')
+    print(f'--COMBINING BOTH USER PLAYLIST AND SAMPLE PLAYLIST')
+    combined_playlist = user.playlist + sample.playlist
+    print(f'Playlist {combined_playlist.name}: {combined_playlist}')
+    
+    
 
 def parse_args(arglist):
     """ Parses command-line arguments
