@@ -1,10 +1,9 @@
 # An initial file for the project.
 from argparse import ArgumentParser
 from itertools import islice
-import json
 import random
 import re
-import sys
+import sys 
 
 
 class Song:
@@ -33,6 +32,10 @@ class Song:
 
         Side effects:
             Sets attributes for each argument.
+            
+        Primary Author: 
+            Lexin Deang
+        
 
         """
 
@@ -53,6 +56,9 @@ class Song:
 
         Returns:
             str: An informal representation of the song.
+            
+        Primary Author:
+            Justin Flores
         """
         return f"'{self.track_name}' by {self.artists}"
 
@@ -61,6 +67,9 @@ class Song:
 
         Returns:
             str: A formal string representation of the song.
+            
+        Primary Author:
+            Justin Flores
         """
         return f"Song({(self.track_name)}, {(self.artists)})\n{self.properties}\n"
 
@@ -81,6 +90,9 @@ class Playlist:
 
         Side effects:
             Sets attributes for 'song_list' and 'name'.
+            
+        primary author:
+            Devon Wilkes
         """
         self.song_list = []
         self.name = "Playlist"
@@ -90,6 +102,9 @@ class Playlist:
 
         Returns:
             str: A string representation of the playlist.
+            
+        Primary Author:
+            Lexin Deang
         """
 
         playlist = f"Playlist {self.name} : \n"
@@ -100,6 +115,12 @@ class Playlist:
 
     def __repr__(self):
         """ Returns a formal string representation of the playlist
+        
+        returns:
+            str: A formal string representation of the playlist.
+            
+        Primary Author:
+            Lexin Deang
         """
         playlist = f'Playlist {self.name}: \n'
         for song in self.song_list:
@@ -117,17 +138,23 @@ class Playlist:
 
         Returns:
             list: A list of songs that are in both playlists.
+        
+        Primary Author:
+            Lexin Deang
         """
         new = set(self.song_list) | set(other.song_list)
         new_playlist = Playlist()
         new_playlist.song_list = list(new)
         return new_playlist
 
-    def add_name(self, user_name):  # Devon
+    def add_name(self, user_name):
         """ Updates the name for the Playlist with a user input.
 
         Side effects: 
             Updates the value of 'name'.
+            
+        Primary Author:
+            Devon Wilkes
         """
         self.name = user_name
 
@@ -139,6 +166,12 @@ class Playlist:
             song (obj): the existing song
             artists (str): the artists involved in the song
             track_name (str): the name of the song
+            
+        Raises:
+            ValueError: If no values are inputted (song, artists, track_name)
+        
+        Primary Author:
+            Yihe Liu
         """
         if song is None and artists is None and track_name is None:
             raise ValueError("No values inputted (song, artists, track_name)")
@@ -164,6 +197,9 @@ class Playlist:
 
         Raises:
             ValueError: If the song is not in the Playlist
+            
+        Primary Author:
+            Yihe Liu
         """
         if artists is None or track_name is None:
             raise ValueError("Both artists and track_name must be provided")
@@ -184,6 +220,9 @@ class Playlist:
 
         Side effects:
             Sorts the 'song_list' attribute.
+            
+        Primary Author:
+            Pernelle DeSouza
         """
         # Sorting the songs based on the populairty attribute of each songs
         self.song_list.sort(key=lambda song: song.properties.get('popularity'),
@@ -198,6 +237,9 @@ def matches_preferences(user, song):
 
     Returns:
         bool: True if the song matches the user's preferences, False otherwise
+    
+    Primary Author:
+        Lexin Deang
     """
     for key, value in user.preferences.items():
         if value is not None:
@@ -234,6 +276,9 @@ class User:
         Side effects:
             Initializes 'name' and 'playlist' attributes.
             Initializes 'preferances' dictionary with default values.
+        
+        Primary Author:
+            Lexin Deang
         """
         self.name = username
         self.playlist = Playlist()
@@ -260,6 +305,9 @@ class User:
             duration (int, optional): The maximum duration of songs in milliseconds. Defaults to None.
             explicit (bool, optional): Specifies if explicit. Defaults to None.
             genre (str, optional): The preferred genre. Defaults to None.
+        
+        Primary Author:
+            Lexin Deang
         """
 
         self.preferences["popularity"] = popularity
@@ -272,6 +320,9 @@ class User:
 
         Returns:
             A refined list of songs that match the user's criteria
+        
+        Primary Author:
+            Justin Flores, Lexin Deang
         """
 
         filtered_results = []
@@ -313,6 +364,9 @@ class User:
 
         Side effects:
             Updates the value of 'queue'.
+            
+        Primary Author:
+            Devon Wilkes
         """
         temp_queue = []
         if (preference is not None):
@@ -335,6 +389,9 @@ class User:
 
         Side effects:
             Updates the value of 'queue'.
+        
+        Primary Author:
+            Devon Wilkes
         """
         playing = f"Now Playing from {self.playlist.name}: {self.queue[0]}\n"
         self.queue[0].pop
@@ -360,6 +417,7 @@ def main(name, playlist_name, popularity, duration, explicit, genre):
 
     Side effects:
         Prints out the results of the program.
+
     """
     print(f'--USER CREATED : {name}')
     print(f'--PLAYLIST CREATED : {playlist_name}')
@@ -428,6 +486,9 @@ def parse_args(arglist):
 
     Returns:
         args (argparse): The parsed command-line arguments. 
+    
+    Primary Author:
+        Devon Wilkes
     """
     parser = ArgumentParser()
     parser.add_argument("name", help="The user using the Playlist function")
@@ -442,6 +503,12 @@ def parse_args(arglist):
 
 
 if __name__ == "__main__":
+    """ The main function of the program.
+    
+    Primary Author:
+        Devon Wilkes
+        
+    """
     args = parse_args(sys.argv[1:])
     main(args.name, args.playlist_name, args.popularity,
          args.duration, args.explicit, args.genre)
