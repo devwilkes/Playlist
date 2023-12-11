@@ -8,6 +8,7 @@ Group Members: Lexin Deang, Pernelle De Souza, Justin Flores, Yihe Liu, Devon Wi
 Song Data Source: https://www.kaggle.com/datasets/maharshipandya/-spotify-tracks-dataset
 
 Method Function | Primary Author | Techniques Demonstrated
+:---: | :---: | :---:
 parse_args() | Devon Wilkes | The ArgumentParser class from the argparse module
 Playlist and Song Classes | Lexin Deang | Composition of two custom classes
 remove_song() | Yihe Liu | Optional parameters
