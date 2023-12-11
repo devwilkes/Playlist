@@ -16,7 +16,7 @@ filter_songs() | Justin Flores | With statements
 __str__() (Playlist class) | Pernelle De Souza | F-strings containing expressions
 __repr__() (Song Class) | Justin Flores | Showcases a formal attribute of a class
 generate_queue() | Devon Wilkes | Use of a key as a lambda expression using sorted()
-__add__ (Pkaylist class) | Lexin Deang | Set operations
+__add__ (Playlist class) | Lexin Deang | Set operations
 Filtering (Jupyter Notebook)| Pernelle De Souza | Filtering using Pandas DataFrames
 Graphing (Jupyter Notebook) | Yihe Liu | Visualizing data with PyPlot/Seaborn
 
