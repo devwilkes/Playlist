@@ -478,9 +478,13 @@ def main(name, playlist_name, popularity, duration, explicit, genre):
 
     # Generating queue of songs from user playlist
     print('-' * 100 + '\n')
-    print(f'--Generating queues of songs to be played from a User\'s Playlist')
+    print(f'--GENERATING QUEUES OF SONGS TO BE PLAYED FROM A USER\'S PLAYLIST')
     print(user.playlist)
     user.generate_queue()
+    print(f'Generating a queue with default parameters')
+    print(user.play_button)
+    user.generate_queue("genre", 5, False)
+    print(f'Generating a queue with set parameters')
     print(user.play_button)
 
 
