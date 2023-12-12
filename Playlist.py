@@ -265,7 +265,7 @@ class User:
         preferences (dict): A dictionary containing user preferences for the playlist
         playlist (Playlist): The user's playlist
         name (str): The username
-    
+
     """
 
     def __init__(self, username):
@@ -323,7 +323,7 @@ class User:
             A refined list of songs that match the user's criteria
 
         Primary Author:
-            Justin Flores, Lexin Deang
+            Justin Flores
         """
 
         filtered_results = []
@@ -371,15 +371,12 @@ class User:
         """
         temp_queue = []
         if (preference is not None):
-            temp_queue.append(sorted(self.playlist.song_list, key=lambda s:
-                                     s.properties.get(preference), reverse=rev))
+            temp_queue = (sorted(self.playlist.song_list, key=lambda s:
+                                 s.properties.get(preference), reverse=rev))
         else:
-            temp_queue.append(random.sample(
-                self.playlist.song_list, len(self.playlist.song_list)))
-        counter = 0
-        while counter < length:
-            self.queue.append(temp_queue.pop(0))
-            counter += 1
+            temp_queue = self.playlist.song_list.copy()
+            random.shuffle(temp_queue)
+        self.queue = temp_queue[: length]
 
     def play_button(self):
         """ 'Plays' a song from the top of the queue. Displays the song that's
@@ -396,12 +393,13 @@ class User:
             Devon Wilkes
         """
         playing = f"Now Playing from {self.playlist.name}: {self.queue[0]}\n"
-        self.queue[0].pop
+        self.queue.pop()
         playing += f"Up next: {self.queue[0]}"
         playing += "In queue: \n"
         counter = 1
         while counter < len(self.queue):
             playing += f"{self.queue[counter]} \n"
+            counter += 1
         return playing
 
 
@@ -480,13 +478,12 @@ def main(name, playlist_name, popularity, duration, explicit, genre):
     # Generating queue of songs from user playlist
     print('-' * 100 + '\n')
     print(f'--GENERATING QUEUES OF SONGS TO BE PLAYED FROM A USER\'S PLAYLIST')
-    print(user.playlist)
     user.generate_queue()
     print(f'Generating a queue with default parameters')
-    print(user.play_button)
+    print(user.play_button())
     user.generate_queue("genre", 5, False)
     print(f'Generating a queue with set parameters')
-    print(user.play_button)
+    print(user.play_button())
 
 
 def parse_args(arglist):
