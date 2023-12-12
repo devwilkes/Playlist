@@ -1,6 +1,7 @@
 # An initial file for the project.
 from argparse import ArgumentParser
 from itertools import islice
+import pandas as pd
 import random
 import re
 import sys
@@ -323,30 +324,23 @@ class User:
             A refined list of songs that match the user's criteria
 
         Primary Author:
-            Justin Flores
+            Justin Flores, Lexin Deang
         """
 
         filtered_results = []
-        pattern = r'''(?x)^(\d+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t
-                        (\d+)\t(\d+)\t(FALSE|TRUE)\t([\d.]+)\t(.+?)\t(\d+)\t
-                        ([-.\d]+)\t(\d+)\t([\d.]+)\t(.+?)\t(.+?)\t([\d.]+)\t
-                        (.+?)\t([\d.]+)\t(\d+)\t([^\t]+)$'''
-
-        with open("dataset.txt", encoding='utf-8') as file:
-
-            for line in islice(file, 1, None):
-                match = re.search(pattern, line.strip())
-                artists, track_name = match.group(3), match.group(5)
-                song = Song(artists, track_name)
-
-                song.properties['popularity'] = int(match.group(6))
-                song.properties['duration'] = int(match.group(7))
-                song.properties['explicit'] = bool(match.group(8))
-                song.properties['genre'] = match.group(21)
-                song.properties['album_name'] = match.group(4)
-
-                if matches_preferences(self, song):
-                    filtered_results.append(song)
+        df = pd.read_csv("dataset.txt", sep='\t')
+        
+        for column, row in df.iterrows():
+            song = Song(row['artists'], row['track_name'])
+            song.properties['popularity'] = row['popularity']
+            song.properties['duration'] = row['duration_ms']
+            song.properties['explicit'] = row['explicit']
+            song.properties['genre'] = row['track_genre']
+            song.properties['album_name'] = row['album_name']
+            
+            if matches_preferences(self, song):
+                filtered_results.append(song)
+        
 
         for song in filtered_results:
             self.playlist.add_song(song)
