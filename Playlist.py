@@ -92,7 +92,7 @@ class Playlist:
             Sets attributes for 'song_list' and 'name'.
 
         primary author:
-            Devon Wilkes
+            Lexin Deang
         """
         self.song_list = []
         self.name = "Playlist"
@@ -265,6 +265,7 @@ class User:
         preferences (dict): A dictionary containing user preferences for the playlist
         playlist (Playlist): The user's playlist
         name (str): The username
+    
     """
 
     def __init__(self, username):
